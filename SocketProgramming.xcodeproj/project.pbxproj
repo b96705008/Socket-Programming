@@ -7,7 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DE63F9672186DB6200F55AB4 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE63F9662186DB6200F55AB4 /* main.cpp */; };
+		DE52E2412189891900516758 /* TCPServerSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE52E23F2189891900516758 /* TCPServerSocket.cpp */; };
+		DE52E24421898ED800516758 /* TCPChildSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE52E24221898ED800516758 /* TCPChildSocket.cpp */; };
+		DE52E246218A2EC200516758 /* client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE52E245218A2EC200516758 /* client.cpp */; };
+		DE63F9672186DB6200F55AB4 /* aws.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE63F9662186DB6200F55AB4 /* aws.cpp */; };
+		DE63F9702186DC2200F55AB4 /* LinkData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE63F96E2186DC2200F55AB4 /* LinkData.cpp */; };
+		DE63F9742186DDBE00F55AB4 /* UDPSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE63F9722186DDBE00F55AB4 /* UDPSocket.cpp */; };
+		DE63F9822186ED5600F55AB4 /* serverA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE63F97B2186E7DF00F55AB4 /* serverA.cpp */; };
+		DEFA399521878051007B0471 /* LinkDataset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEFA399321878051007B0471 /* LinkDataset.cpp */; };
+		DEFA399721879A37007B0471 /* serverB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEFA399621879A37007B0471 /* serverB.cpp */; };
+		DEFA399A21879DA0007B0471 /* DataParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEFA399821879DA0007B0471 /* DataParser.cpp */; };
+		DEFA399C2187BD1E007B0471 /* serverC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEFA399B2187BD1E007B0471 /* serverC.cpp */; };
+		DEFA399F2187E64A007B0471 /* makefile in Sources */ = {isa = PBXBuildFile; fileRef = DEFA399E2187E64A007B0471 /* makefile */; };
+		DEFA39A52187EDE0007B0471 /* ComputedLinkData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEFA39A32187EDE0007B0471 /* ComputedLinkData.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -20,15 +32,52 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		DE63F9772186E7DF00F55AB4 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DE52E23F2189891900516758 /* TCPServerSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TCPServerSocket.cpp; sourceTree = "<group>"; };
+		DE52E2402189891900516758 /* TCPServerSocket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TCPServerSocket.hpp; sourceTree = "<group>"; };
+		DE52E24221898ED800516758 /* TCPChildSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TCPChildSocket.cpp; sourceTree = "<group>"; };
+		DE52E24321898ED800516758 /* TCPChildSocket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TCPChildSocket.hpp; sourceTree = "<group>"; };
+		DE52E245218A2EC200516758 /* client.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = client.cpp; sourceTree = "<group>"; };
 		DE63F9632186DB6200F55AB4 /* SocketProgramming */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SocketProgramming; sourceTree = BUILT_PRODUCTS_DIR; };
-		DE63F9662186DB6200F55AB4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		DE63F9662186DB6200F55AB4 /* aws.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = aws.cpp; sourceTree = "<group>"; };
+		DE63F96E2186DC2200F55AB4 /* LinkData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LinkData.cpp; sourceTree = "<group>"; };
+		DE63F96F2186DC2200F55AB4 /* LinkData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LinkData.hpp; sourceTree = "<group>"; };
+		DE63F9722186DDBE00F55AB4 /* UDPSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UDPSocket.cpp; sourceTree = "<group>"; };
+		DE63F9792186E7DF00F55AB4 /* BackendA */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BackendA; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE63F97B2186E7DF00F55AB4 /* serverA.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = serverA.cpp; sourceTree = "<group>"; };
+		DE63F9842186F71000F55AB4 /* UDPSocket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UDPSocket.hpp; sourceTree = "<group>"; };
+		DEFA399321878051007B0471 /* LinkDataset.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LinkDataset.cpp; sourceTree = "<group>"; };
+		DEFA399421878051007B0471 /* LinkDataset.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LinkDataset.hpp; sourceTree = "<group>"; };
+		DEFA399621879A37007B0471 /* serverB.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = serverB.cpp; sourceTree = "<group>"; };
+		DEFA399821879DA0007B0471 /* DataParser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DataParser.cpp; sourceTree = "<group>"; };
+		DEFA399921879DA0007B0471 /* DataParser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DataParser.hpp; sourceTree = "<group>"; };
+		DEFA399B2187BD1E007B0471 /* serverC.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = serverC.cpp; sourceTree = "<group>"; };
+		DEFA399D2187C64C007B0471 /* defs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defs.h; sourceTree = "<group>"; };
+		DEFA399E2187E64A007B0471 /* makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = makefile; sourceTree = "<group>"; };
+		DEFA39A32187EDE0007B0471 /* ComputedLinkData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ComputedLinkData.cpp; sourceTree = "<group>"; };
+		DEFA39A42187EDE0007B0471 /* ComputedLinkData.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ComputedLinkData.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		DE63F9602186DB6200F55AB4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE63F9762186E7DF00F55AB4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -50,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				DE63F9632186DB6200F55AB4 /* SocketProgramming */,
+				DE63F9792186E7DF00F55AB4 /* BackendA */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,7 +107,27 @@
 		DE63F9652186DB6200F55AB4 /* SocketProgramming */ = {
 			isa = PBXGroup;
 			children = (
-				DE63F9662186DB6200F55AB4 /* main.cpp */,
+				DE63F9662186DB6200F55AB4 /* aws.cpp */,
+				DE52E245218A2EC200516758 /* client.cpp */,
+				DEFA39A32187EDE0007B0471 /* ComputedLinkData.cpp */,
+				DEFA39A42187EDE0007B0471 /* ComputedLinkData.hpp */,
+				DEFA399821879DA0007B0471 /* DataParser.cpp */,
+				DEFA399921879DA0007B0471 /* DataParser.hpp */,
+				DEFA399D2187C64C007B0471 /* defs.h */,
+				DE63F96E2186DC2200F55AB4 /* LinkData.cpp */,
+				DE63F96F2186DC2200F55AB4 /* LinkData.hpp */,
+				DEFA399321878051007B0471 /* LinkDataset.cpp */,
+				DEFA399421878051007B0471 /* LinkDataset.hpp */,
+				DEFA399E2187E64A007B0471 /* makefile */,
+				DE63F97B2186E7DF00F55AB4 /* serverA.cpp */,
+				DEFA399621879A37007B0471 /* serverB.cpp */,
+				DEFA399B2187BD1E007B0471 /* serverC.cpp */,
+				DE52E24221898ED800516758 /* TCPChildSocket.cpp */,
+				DE52E24321898ED800516758 /* TCPChildSocket.hpp */,
+				DE52E23F2189891900516758 /* TCPServerSocket.cpp */,
+				DE52E2402189891900516758 /* TCPServerSocket.hpp */,
+				DE63F9722186DDBE00F55AB4 /* UDPSocket.cpp */,
+				DE63F9842186F71000F55AB4 /* UDPSocket.hpp */,
 			);
 			path = SocketProgramming;
 			sourceTree = "<group>";
@@ -82,6 +152,23 @@
 			productReference = DE63F9632186DB6200F55AB4 /* SocketProgramming */;
 			productType = "com.apple.product-type.tool";
 		};
+		DE63F9782186E7DF00F55AB4 /* BackendA */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DE63F97D2186E7DF00F55AB4 /* Build configuration list for PBXNativeTarget "BackendA" */;
+			buildPhases = (
+				DE63F9752186E7DF00F55AB4 /* Sources */,
+				DE63F9762186E7DF00F55AB4 /* Frameworks */,
+				DE63F9772186E7DF00F55AB4 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BackendA;
+			productName = BackendA;
+			productReference = DE63F9792186E7DF00F55AB4 /* BackendA */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -92,6 +179,10 @@
 				ORGANIZATIONNAME = "Tai-Yi Kuo";
 				TargetAttributes = {
 					DE63F9622186DB6200F55AB4 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					DE63F9782186E7DF00F55AB4 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 					};
@@ -110,6 +201,7 @@
 			projectRoot = "";
 			targets = (
 				DE63F9622186DB6200F55AB4 /* SocketProgramming */,
+				DE63F9782186E7DF00F55AB4 /* BackendA */,
 			);
 		};
 /* End PBXProject section */
@@ -119,7 +211,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE63F9672186DB6200F55AB4 /* main.cpp in Sources */,
+				DEFA399521878051007B0471 /* LinkDataset.cpp in Sources */,
+				DE52E2412189891900516758 /* TCPServerSocket.cpp in Sources */,
+				DEFA399721879A37007B0471 /* serverB.cpp in Sources */,
+				DE52E24421898ED800516758 /* TCPChildSocket.cpp in Sources */,
+				DE52E246218A2EC200516758 /* client.cpp in Sources */,
+				DEFA39A52187EDE0007B0471 /* ComputedLinkData.cpp in Sources */,
+				DEFA399F2187E64A007B0471 /* makefile in Sources */,
+				DE63F9822186ED5600F55AB4 /* serverA.cpp in Sources */,
+				DE63F9672186DB6200F55AB4 /* aws.cpp in Sources */,
+				DE63F9702186DC2200F55AB4 /* LinkData.cpp in Sources */,
+				DE63F9742186DDBE00F55AB4 /* UDPSocket.cpp in Sources */,
+				DEFA399C2187BD1E007B0471 /* serverC.cpp in Sources */,
+				DEFA399A21879DA0007B0471 /* DataParser.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE63F9752186E7DF00F55AB4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +358,24 @@
 			};
 			name = Release;
 		};
+		DE63F97E2186E7DF00F55AB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3SMGT2X725;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		DE63F97F2186E7DF00F55AB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3SMGT2X725;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -264,6 +393,15 @@
 			buildConfigurations = (
 				DE63F96B2186DB6200F55AB4 /* Debug */,
 				DE63F96C2186DB6200F55AB4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DE63F97D2186E7DF00F55AB4 /* Build configuration list for PBXNativeTarget "BackendA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE63F97E2186E7DF00F55AB4 /* Debug */,
+				DE63F97F2186E7DF00F55AB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
