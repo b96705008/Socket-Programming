@@ -193,11 +193,8 @@ Temporary Items
 .apdisk
 
 # APP focus
-aws
+prog_*
 client
-serverA
-serverB
-serverC
 
 # End of https://www.gitignore.io/api/c,c++,xcode
 

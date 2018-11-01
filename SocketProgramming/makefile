@@ -1,30 +1,49 @@
-binaries=aws client serverA serverB serverC
-
-all: $(binaries)
+all: compile_aws compile_client compile_monitor compile_serverA compile_serverB compile_serverC
 
 clean: 
-	-rm *.o $(binaries)
+	-rm *.o prog_* client
 
-aws: aws.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o TCPServerSocket.o TCPChildSocket.o
-	g++ -g -o aws aws.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o TCPServerSocket.o TCPChildSocket.o
+serverA: prog_serverA
+	./prog_serverA
 
-client: client.o
+serverB: prog_serverB
+	./prog_serverB
+
+serverC: prog_serverC
+	./prog_serverC
+
+aws: prog_aws
+	./prog_aws
+
+monitor: prog_monitor
+	./prog_monitor
+
+compile_aws: aws.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o TCPServerSocket.o TCPChildSocket.o
+	g++ -g -o prog_aws aws.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o TCPServerSocket.o TCPChildSocket.o
+
+compile_client: client.o
 	g++ -g -o client client.o
 
-serverA: serverA.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o
-	g++ -g -o serverA serverA.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o
+compile_monitor: monitor.o DataParser.o
+	g++ -g -o prog_monitor monitor.o DataParser.o
 
-serverB: serverB.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o
-	g++ -g -o serverB serverB.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o
+compile_serverA: serverA.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o
+	g++ -g -o prog_serverA serverA.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o
 
-serverC: serverC.o UDPSocket.o ComputedLinkData.o LinkData.o DataParser.o
-	g++ -g -o serverC serverC.o UDPSocket.o ComputedLinkData.o LinkData.o DataParser.o
+compile_serverB: serverB.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o
+	g++ -g -o prog_serverB serverB.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o
+
+compile_serverC: serverC.o UDPSocket.o ComputedLinkData.o LinkData.o DataParser.o
+	g++ -g -o prog_serverC serverC.o UDPSocket.o ComputedLinkData.o LinkData.o DataParser.o
 
 aws.o: aws.cpp LinkData.hpp UDPSocket.hpp DataParser.hpp defs.h
 	g++ -g -c aws.cpp
 
 client.o: client.cpp defs.h
 	g++ -g -c client.cpp
+
+monitor.o: monitor.cpp DataParser.hpp defs.h 
+	g++ -g -c monitor.cpp
 
 serverA.o: serverA.cpp UDPSocket.hpp LinkData.hpp defs.h
 	g++ -g -c serverA.cpp

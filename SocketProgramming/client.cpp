@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
     
     if (sockfd == -1) {
         printf("Fail to create a socket.");
+        exit(1);
     }
     
     // aws server connection

@@ -10,6 +10,7 @@
 		DE52E2412189891900516758 /* TCPServerSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE52E23F2189891900516758 /* TCPServerSocket.cpp */; };
 		DE52E24421898ED800516758 /* TCPChildSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE52E24221898ED800516758 /* TCPChildSocket.cpp */; };
 		DE52E246218A2EC200516758 /* client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE52E245218A2EC200516758 /* client.cpp */; };
+		DE573F8C218B68790038CBE3 /* monitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE573F8B218B68790038CBE3 /* monitor.cpp */; };
 		DE63F9672186DB6200F55AB4 /* aws.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE63F9662186DB6200F55AB4 /* aws.cpp */; };
 		DE63F9702186DC2200F55AB4 /* LinkData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE63F96E2186DC2200F55AB4 /* LinkData.cpp */; };
 		DE63F9742186DDBE00F55AB4 /* UDPSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE63F9722186DDBE00F55AB4 /* UDPSocket.cpp */; };
@@ -49,6 +50,7 @@
 		DE52E24221898ED800516758 /* TCPChildSocket.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TCPChildSocket.cpp; sourceTree = "<group>"; };
 		DE52E24321898ED800516758 /* TCPChildSocket.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TCPChildSocket.hpp; sourceTree = "<group>"; };
 		DE52E245218A2EC200516758 /* client.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = client.cpp; sourceTree = "<group>"; };
+		DE573F8B218B68790038CBE3 /* monitor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = monitor.cpp; sourceTree = "<group>"; };
 		DE63F9632186DB6200F55AB4 /* SocketProgramming */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SocketProgramming; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE63F9662186DB6200F55AB4 /* aws.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = aws.cpp; sourceTree = "<group>"; };
 		DE63F96E2186DC2200F55AB4 /* LinkData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LinkData.cpp; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				DEFA399321878051007B0471 /* LinkDataset.cpp */,
 				DEFA399421878051007B0471 /* LinkDataset.hpp */,
 				DEFA399E2187E64A007B0471 /* makefile */,
+				DE573F8B218B68790038CBE3 /* monitor.cpp */,
 				DE63F97B2186E7DF00F55AB4 /* serverA.cpp */,
 				DEFA399621879A37007B0471 /* serverB.cpp */,
 				DEFA399B2187BD1E007B0471 /* serverC.cpp */,
@@ -215,6 +218,7 @@
 				DE52E2412189891900516758 /* TCPServerSocket.cpp in Sources */,
 				DEFA399721879A37007B0471 /* serverB.cpp in Sources */,
 				DE52E24421898ED800516758 /* TCPChildSocket.cpp in Sources */,
+				DE573F8C218B68790038CBE3 /* monitor.cpp in Sources */,
 				DE52E246218A2EC200516758 /* client.cpp in Sources */,
 				DEFA39A52187EDE0007B0471 /* ComputedLinkData.cpp in Sources */,
 				DEFA399F2187E64A007B0471 /* makefile in Sources */,
