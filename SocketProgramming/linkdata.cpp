@@ -5,7 +5,7 @@
 //  Created by Tai-Yi Kuo on 10/28/18.
 //  Copyright © 2018 Tai-Yi Kuo. All rights reserved.
 //
-#include "LinkData.hpp"
+#include "linkdata.h"
 using namespace std;
 
 LinkData::LinkData() {

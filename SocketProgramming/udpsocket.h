@@ -6,8 +6,8 @@
 //  Copyright © 2018 Tai-Yi Kuo. All rights reserved.
 //
 
-#ifndef UDPSocket_h
-#define UDPSocket_h
+#ifndef udpsocket_h
+#define udpsocket_h
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -23,7 +23,7 @@
 #include "defs.h"
 using namespace std;
 
-#endif /* UDPSocket_h */
+#endif /* udpsocket_h */
 
 class UDPSocket {
 public:

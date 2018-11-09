@@ -1,7 +1,11 @@
 all: compile_aws compile_client compile_monitor compile_serverA compile_serverB compile_serverC
 
+binaries = prog_serverA prog_serverB prog_serverC prog_aws prog_monitor client
+
+.PHONY: binaries
+
 clean: 
-	-rm *.o prog_* client
+	-rm *.o $(binaries)
 
 serverA: prog_serverA
 	./prog_serverA
@@ -18,61 +22,61 @@ aws: prog_aws
 monitor: prog_monitor
 	./prog_monitor
 
-compile_aws: aws.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o TCPServerSocket.o TCPChildSocket.o
-	g++ -g -o prog_aws aws.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o TCPServerSocket.o TCPChildSocket.o
+compile_aws: aws.o udpsocket.o linkdataset.o linkdata.o dataparser.o tcpserversocket.o tcpchildsocket.o
+	g++ -g -o prog_aws aws.o udpsocket.o linkdataset.o linkdata.o dataparser.o tcpserversocket.o tcpchildsocket.o
 
 compile_client: client.o
 	g++ -g -o client client.o
 
-compile_monitor: monitor.o DataParser.o
-	g++ -g -o prog_monitor monitor.o DataParser.o
+compile_monitor: monitor.o dataparser.o
+	g++ -g -o prog_monitor monitor.o dataparser.o
 
-compile_serverA: serverA.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o
-	g++ -g -o prog_serverA serverA.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o
+compile_serverA: serverA.o udpsocket.o linkdataset.o linkdata.o dataparser.o
+	g++ -g -o prog_serverA serverA.o udpsocket.o linkdataset.o linkdata.o dataparser.o
 
-compile_serverB: serverB.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o
-	g++ -g -o prog_serverB serverB.o UDPSocket.o LinkDataset.o LinkData.o DataParser.o
+compile_serverB: serverB.o udpsocket.o linkdataset.o linkdata.o dataparser.o
+	g++ -g -o prog_serverB serverB.o udpsocket.o linkdataset.o linkdata.o dataparser.o
 
-compile_serverC: serverC.o UDPSocket.o ComputedLinkData.o LinkData.o DataParser.o
-	g++ -g -o prog_serverC serverC.o UDPSocket.o ComputedLinkData.o LinkData.o DataParser.o
+compile_serverC: serverC.o udpsocket.o computedlinkdata.o linkdata.o dataparser.o
+	g++ -g -o prog_serverC serverC.o udpsocket.o computedlinkdata.o linkdata.o dataparser.o
 
-aws.o: aws.cpp LinkData.hpp UDPSocket.hpp DataParser.hpp defs.h
+aws.o: aws.cpp linkdata.h udpsocket.h dataparser.h defs.h
 	g++ -g -c aws.cpp
 
 client.o: client.cpp defs.h
 	g++ -g -c client.cpp
 
-monitor.o: monitor.cpp DataParser.hpp defs.h 
+monitor.o: monitor.cpp dataparser.h defs.h 
 	g++ -g -c monitor.cpp
 
-serverA.o: serverA.cpp UDPSocket.hpp LinkData.hpp defs.h
+serverA.o: serverA.cpp udpsocket.h linkdata.h defs.h
 	g++ -g -c serverA.cpp
 
-serverB.o: serverB.cpp UDPSocket.hpp LinkData.hpp defs.h
+serverB.o: serverB.cpp udpsocket.h linkdata.h defs.h
 	g++ -g -c serverB.cpp
 
-serverC.o: serverC.cpp UDPSocket.hpp ComputedLinkData.hpp DataParser.hpp defs.h
+serverC.o: serverC.cpp udpsocket.h computedlinkdata.h dataparser.h defs.h
 	g++ -g -c serverC.cpp
 
-UDPSocket.o: UDPSocket.cpp UDPSocket.hpp defs.h
-	g++ -g -c UDPSocket.cpp
+udpsocket.o: udpsocket.cpp udpsocket.h defs.h
+	g++ -g -c udpsocket.cpp
 
-TCPServerSocket.o: TCPServerSocket.cpp TCPServerSocket.hpp defs.h
-	g++ -g -c TCPServerSocket.cpp
+tcpserversocket.o: tcpserversocket.cpp tcpserversocket.h defs.h
+	g++ -g -c tcpserversocket.cpp
 
-TCPChildSocket.o: TCPChildSocket.cpp TCPChildSocket.hpp defs.h
-	g++ -g -c TCPChildSocket.cpp
+tcpchildsocket.o: tcpchildsocket.cpp tcpchildsocket.h defs.h
+	g++ -g -c tcpchildsocket.cpp
 
-LinkDataset.o: LinkDataset.cpp LinkDataset.hpp
-	g++ -g -c LinkDataset.cpp
+linkdataset.o: linkdataset.cpp linkdataset.h
+	g++ -g -c linkdataset.cpp
 
-LinkData.o: LinkData.cpp LinkData.hpp
-	g++ -g -c LinkData.cpp
+linkdata.o: linkdata.cpp linkdata.h
+	g++ -g -c linkdata.cpp
 
-DataParser.o: DataParser.cpp DataParser.hpp
-	g++ -g -c DataParser.cpp
+dataparser.o: dataparser.cpp dataparser.h
+	g++ -g -c dataparser.cpp
 
-ComputedLinkData.o: ComputedLinkData.cpp ComputedLinkData.hpp LinkData.cpp LinkData.hpp
-	g++ -g -c ComputedLinkData.cpp
+computedlinkdata.o: computedlinkdata.cpp computedlinkdata.h linkdata.cpp linkdata.h
+	g++ -g -c computedlinkdata.cpp
 
 

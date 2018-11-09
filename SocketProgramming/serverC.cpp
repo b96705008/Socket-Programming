@@ -15,9 +15,9 @@
 #include <sys/types.h>
 #include <string>
 #include <iostream>
-#include "UDPSocket.hpp"
-#include "ComputedLinkData.hpp"
-#include "DataParser.hpp"
+#include "udpsocket.h"
+#include "computedlinkdata.h"
+#include "dataparser.h"
 #include "defs.h"
 using namespace std;
 
@@ -46,7 +46,7 @@ int main() {
         string dataStr = server.getDataString();
         vector<string> tokens = DataParser::splitCSVLine(dataStr);
         ComputedLinkData data(&tokens);
-        printf("The Server C received link information of link <%d>, file size <%f>, and signal power <%f>\n", data.id(), data.fileSize(), data.power());
+        printf("The Server C received link information of link <%d>, file size <%s>, and signal power <%s>\n", data.id(), tokens[5].c_str(), tokens[6].c_str());
         
         // compute
         data.compute();

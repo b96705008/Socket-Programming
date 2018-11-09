@@ -15,10 +15,10 @@
 #include <sys/types.h>
 #include <string>
 #include <iostream>
-#include "LinkData.hpp"
-#include "UDPSocket.hpp"
-#include "TCPServerSocket.hpp"
-#include "DataParser.hpp"
+#include "linkdata.h"
+#include "udpsocket.h"
+#include "tcpserversocket.h"
+#include "dataparser.h"
 #include "defs.h"
 using namespace std;
 
@@ -27,7 +27,7 @@ struct sockaddr_in getServerAddr(int);
 void testRequestLink(string, UDPSocket&, struct sockaddr_in&);
 bool queryLinkDataFromServer(string, string, UDPSocket&, struct sockaddr_in&, LinkData&);
 bool queryLinkData(string, UDPSocket&, struct sockaddr_in&, struct sockaddr_in&, LinkData&);
-string requestForComputing(LinkData&, float, float, UDPSocket&, struct sockaddr_in&);
+string requestForComputing(LinkData&, string, string, UDPSocket&, struct sockaddr_in&);
 
 int main(int argc, const char *argv[]) {
     // Boot Up
@@ -72,17 +72,19 @@ int main(int argc, const char *argv[]) {
         } else {
             int clientPort = childSocket->getClientPort();
             string requestLinkID = tokens[0];
+            string fileSize = tokens[1];
+            string signalPower = tokens[2];
             
-            printf("The AWS received link ID=<%s>, size=<%s>, and power=<%s> from the client using TCP over port <%d>\n", requestLinkID.c_str(), tokens[1].c_str(), tokens[2].c_str(), clientPort);
+            printf("The AWS received link ID=<%s>, size=<%s>, and power=<%s> from the client using TCP over port <%d>\n", requestLinkID.c_str(), fileSize.c_str(), signalPower.c_str(), clientPort);
             
             // log client input
             monitorSocket->sendData(string(CLIENT_INPUT) + "," + clientInput);
-            printf("The AWS sent link ID=<%s>, size=<%s>, and power=<%s> to the monitor using TCP over port <%d>\n", requestLinkID.c_str(), tokens[1].c_str(), tokens[2].c_str(), monitorPort);
+            printf("The AWS sent link ID=<%s>, size=<%s>, and power=<%s> to the monitor using TCP over port <%d>\n", requestLinkID.c_str(), fileSize.c_str(), signalPower.c_str(), monitorPort);
             
             LinkData data;
             bool found = queryLinkData(requestLinkID, queryClient, backendA, backendB, data);
             if (found) {
-                string resp = requestForComputing(data, stof(tokens[1]), stof(tokens[2]), queryClient, backendC);
+                string resp = requestForComputing(data, fileSize, signalPower, queryClient, backendC);
                 vector<string> delays = DataParser::splitCSVLine(resp);
                 childSocket->sendData(delays[2]);
                 printf("The AWS sent delay=<%s>ms to the client using TCP over port <%d>\n", delays[2].c_str(), clientPort);
@@ -115,14 +117,12 @@ struct sockaddr_in getServerAddr(int port) {
     return info;
 }
 
-string requestForComputing(LinkData &data, float fileSize, float signalPower,
+string requestForComputing(LinkData &data, string fileSize, string signalPower,
                          UDPSocket &client, struct sockaddr_in &serverC) {
-    string dataToComputed = data.getDataString() + "," +
-        to_string(fileSize) + "," +
-        to_string(signalPower);
+    string dataToComputed = data.getDataString() + "," + fileSize + "," + signalPower;
     
     client.sendData(serverC, dataToComputed);
-    printf("The AWS sent link ID=<%d>, size=<%f>, power=<%f>, and link information to Backend-Server C using UDP over port <%d>\n", data.id(), fileSize, signalPower, ntohs(serverC.sin_port));
+    printf("The AWS sent link ID=<%d>, size=<%s>, power=<%s>, and link information to Backend-Server C using UDP over port <%d>\n", data.id(), fileSize.c_str(), signalPower.c_str(), ntohs(serverC.sin_port));
     
     client.recvData(serverC);
     string resp = client.getDataString();

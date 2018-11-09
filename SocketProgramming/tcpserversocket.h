@@ -6,8 +6,8 @@
 //  Copyright © 2018 Tai-Yi Kuo. All rights reserved.
 //
 
-#ifndef TCPSocket_hpp
-#define TCPSocket_hpp
+#ifndef tcpsocket_h
+#define tcpsocket_h
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,7 +21,7 @@
 #include <errno.h>
 #include <iostream>
 #include <vector>
-#include "TCPChildSocket.hpp"
+#include "tcpchildsocket.h"
 #include "defs.h"
 using namespace std;
 

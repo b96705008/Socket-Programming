@@ -6,7 +6,7 @@
 //  Copyright © 2018 Tai-Yi Kuo. All rights reserved.
 //
 
-#include "TCPChildSocket.hpp"
+#include "tcpchildsocket.h"
 using namespace std;
 
 TCPChildSocket::TCPChildSocket(int clientSockfd, struct sockaddr_in their_addr) {

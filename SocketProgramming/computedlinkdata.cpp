@@ -6,7 +6,7 @@
 //  Copyright © 2018 Tai-Yi Kuo. All rights reserved.
 //
 
-#include "ComputedLinkData.hpp"
+#include "computedlinkdata.h"
 using namespace std;
 
 double ComputedLinkData::dbmToWatts(double dbm) {

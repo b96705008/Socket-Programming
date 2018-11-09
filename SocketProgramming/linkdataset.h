@@ -6,14 +6,17 @@
 //  Copyright © 2018 Tai-Yi Kuo. All rights reserved.
 //
 
-#ifndef LinkDataset_hpp
-#define LinkDataset_hpp
+#ifndef linkdataset_h
+#define linkdataset_h
 
 #include <stdio.h>
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include "LinkData.hpp"
+#include <fstream>
+#include <iostream>
+#include "linkdata.h"
+#include "dataparser.h"
 using namespace std;
 #endif /* LinkDataset_hpp */
 

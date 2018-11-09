@@ -15,8 +15,8 @@
 #include <sys/types.h>
 #include <string>
 #include <iostream>
-#include "UDPSocket.hpp"
-#include "LinkDataset.hpp"
+#include "udpsocket.h"
+#include "linkdataset.h"
 #include "defs.h"
 using namespace std;
 

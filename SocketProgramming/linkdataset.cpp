@@ -5,12 +5,7 @@
 //  Created by Tai-Yi Kuo on 10/29/18.
 //  Copyright © 2018 Tai-Yi Kuo. All rights reserved.
 //
-
-#include <stdio.h>
-#include <fstream>
-#include <iostream>
-#include "LinkDataset.hpp"
-#include "DataParser.hpp"
+#include "linkdataset.h"
 using namespace std;
 
 LinkDataset::LinkDataset(string filename) {

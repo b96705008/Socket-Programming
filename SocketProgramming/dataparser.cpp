@@ -6,7 +6,7 @@
 //  Copyright © 2018 Tai-Yi Kuo. All rights reserved.
 //
 
-#include "DataParser.hpp"
+#include "dataparser.h"
 using namespace std;
 
 string DataParser::delimeter = ",";

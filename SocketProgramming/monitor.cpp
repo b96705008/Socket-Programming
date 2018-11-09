@@ -15,7 +15,7 @@
 #include <sys/types.h>
 #include <string>
 #include <iostream>
-#include "DataParser.hpp"
+#include "dataparser.h"
 #include "defs.h"
 using namespace std;
 

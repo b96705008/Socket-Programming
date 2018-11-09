@@ -6,13 +6,13 @@
 //  Copyright © 2018 Tai-Yi Kuo. All rights reserved.
 //
 
-#ifndef ComputedLinkData_hpp
-#define ComputedLinkData_hpp
+#ifndef computedlinkdata_h
+#define computedlinkdata_h
 
 #include <stdio.h>
 #include <string>
 #include <math.h>
-#include "LinkData.hpp"
+#include "linkdata.h"
 #endif /* ComputedLinkData_hpp */
 
 

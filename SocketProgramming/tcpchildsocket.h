@@ -6,8 +6,8 @@
 //  Copyright © 2018 Tai-Yi Kuo. All rights reserved.
 //
 
-#ifndef TCPChildSocket_hpp
-#define TCPChildSocket_hpp
+#ifndef tcpchildsocket_h
+#define tcpchildsocket_h
 
 #include <stdio.h>
 #include <stdlib.h>

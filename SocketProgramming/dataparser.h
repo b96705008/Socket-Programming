@@ -6,8 +6,8 @@
 //  Copyright © 2018 Tai-Yi Kuo. All rights reserved.
 //
 
-#ifndef DataParser_hpp
-#define DataParser_hpp
+#ifndef dataparser_h
+#define dataparser_h
 
 #define NOT_FOUND "NOT_FOUND"
 #define BAD_REQUEST "BAD_REQUEST"

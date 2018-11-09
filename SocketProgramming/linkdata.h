@@ -6,8 +6,8 @@
 //  Copyright © 2018 Tai-Yi Kuo. All rights reserved.
 //
 
-#ifndef LinkData_hpp
-#define LinkData_hpp
+#ifndef linkdata_h
+#define linkdata_h
 
 #include <stdio.h>
 #include <string>
