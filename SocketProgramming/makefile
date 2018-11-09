@@ -23,60 +23,60 @@ monitor: prog_monitor
 	./prog_monitor
 
 compile_aws: aws.o udpsocket.o linkdataset.o linkdata.o dataparser.o tcpserversocket.o tcpchildsocket.o
-	g++ -g -o prog_aws aws.o udpsocket.o linkdataset.o linkdata.o dataparser.o tcpserversocket.o tcpchildsocket.o
+	g++ -std=c++11 -g -o prog_aws aws.o udpsocket.o linkdataset.o linkdata.o dataparser.o tcpserversocket.o tcpchildsocket.o
 
 compile_client: client.o
-	g++ -g -o client client.o
+	g++ -std=c++11 -g -o client client.o
 
 compile_monitor: monitor.o dataparser.o
-	g++ -g -o prog_monitor monitor.o dataparser.o
+	g++ -std=c++11 -g -o prog_monitor monitor.o dataparser.o
 
 compile_serverA: serverA.o udpsocket.o linkdataset.o linkdata.o dataparser.o
-	g++ -g -o prog_serverA serverA.o udpsocket.o linkdataset.o linkdata.o dataparser.o
+	g++ -std=c++11 -g -o prog_serverA serverA.o udpsocket.o linkdataset.o linkdata.o dataparser.o
 
 compile_serverB: serverB.o udpsocket.o linkdataset.o linkdata.o dataparser.o
-	g++ -g -o prog_serverB serverB.o udpsocket.o linkdataset.o linkdata.o dataparser.o
+	g++ -std=c++11 -g -o prog_serverB serverB.o udpsocket.o linkdataset.o linkdata.o dataparser.o
 
 compile_serverC: serverC.o udpsocket.o computedlinkdata.o linkdata.o dataparser.o
-	g++ -g -o prog_serverC serverC.o udpsocket.o computedlinkdata.o linkdata.o dataparser.o
+	g++ -std=c++11 -g -o prog_serverC serverC.o udpsocket.o computedlinkdata.o linkdata.o dataparser.o
 
 aws.o: aws.cpp linkdata.h udpsocket.h dataparser.h defs.h
-	g++ -g -c aws.cpp
+	g++ -std=c++11 -g -c aws.cpp
 
 client.o: client.cpp defs.h
-	g++ -g -c client.cpp
+	g++ -std=c++11 -g -c client.cpp
 
 monitor.o: monitor.cpp dataparser.h defs.h 
-	g++ -g -c monitor.cpp
+	g++ -std=c++11 -g -c monitor.cpp
 
 serverA.o: serverA.cpp udpsocket.h linkdata.h defs.h
-	g++ -g -c serverA.cpp
+	g++ -std=c++11 -g -c serverA.cpp
 
 serverB.o: serverB.cpp udpsocket.h linkdata.h defs.h
-	g++ -g -c serverB.cpp
+	g++ -std=c++11 -g -c serverB.cpp
 
 serverC.o: serverC.cpp udpsocket.h computedlinkdata.h dataparser.h defs.h
-	g++ -g -c serverC.cpp
+	g++ -std=c++11 -g -c serverC.cpp
 
 udpsocket.o: udpsocket.cpp udpsocket.h defs.h
-	g++ -g -c udpsocket.cpp
+	g++ -std=c++11 -g -c udpsocket.cpp
 
 tcpserversocket.o: tcpserversocket.cpp tcpserversocket.h defs.h
-	g++ -g -c tcpserversocket.cpp
+	g++ -std=c++11 -g -c tcpserversocket.cpp
 
 tcpchildsocket.o: tcpchildsocket.cpp tcpchildsocket.h defs.h
-	g++ -g -c tcpchildsocket.cpp
+	g++ -std=c++11 -g -c tcpchildsocket.cpp
 
 linkdataset.o: linkdataset.cpp linkdataset.h
-	g++ -g -c linkdataset.cpp
+	g++ -std=c++11 -g -c linkdataset.cpp
 
 linkdata.o: linkdata.cpp linkdata.h
-	g++ -g -c linkdata.cpp
+	g++ -std=c++11 -g -c linkdata.cpp
 
 dataparser.o: dataparser.cpp dataparser.h
-	g++ -g -c dataparser.cpp
+	g++ -std=c++11 -g -c dataparser.cpp
 
 computedlinkdata.o: computedlinkdata.cpp computedlinkdata.h linkdata.cpp linkdata.h
-	g++ -g -c computedlinkdata.cpp
+	g++ -std=c++11 -g -c computedlinkdata.cpp
 
 
