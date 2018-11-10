@@ -26,31 +26,35 @@ int main(int argc, const char * argv[]) {
     struct sockaddr_in clientInfo;
     LinkDataset dataset(DATABASE_A);
     
-    // create socket
+    // create and bind socket
     UDPSocket server;
     if (server.getFD() == -1) {
         exit(1);
     }
     server.bindSocket(LOCAL_ADDR, SERVER_A_UDP_PORT);
     
-    // recv data
     printf("The Server A is up and running using UDP on port <%d>.\n", SERVER_A_UDP_PORT);
     
     while (true) {
+        // receive data
         bool isSuccess = server.recvData(clientInfo);
         
         if (!isSuccess) {
             server.sendData(clientInfo, BAD_REQUEST);
         } else {
+            // get request link id
             string dataStr = server.getDataString();
             int requestID = stoi(dataStr);
             printf("The Server A received input <%d>\n", requestID);
             
+            // search link profile for link id
             if (dataset.containsID(requestID)) {
+                // respond link data profile
                 LinkData data = dataset.get(requestID);
                 printf("The server A has found <1> match\n");
                 server.sendData(clientInfo, data.getDataString());
             } else {
+                // not found
                 printf("The server A has found <0> match\n");
                 server.sendData(clientInfo, NOT_FOUND);
             }

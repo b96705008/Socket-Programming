@@ -9,6 +9,11 @@
 #include "computedlinkdata.h"
 using namespace std;
 
+/**
+ * Transform dbm to watts
+ * @param dbm value in dbm
+ * @return value in watts
+ */
 double ComputedLinkData::dbmToWatts(double dbm) {
     double exp = dbm / 10.0;
     return pow(10.0, exp);
@@ -60,26 +65,42 @@ ComputedLinkData::ComputedLinkData(vector<string> *tokens) {
     propagationTime = 0.0;
 }
 
+/**
+ * Compute Capacity using Shannon theorom
+ */
 void ComputedLinkData::computeCapacity() {
     double signalWatts = ComputedLinkData::dbmToWatts(static_cast<double>(signalPower));
     double noiseWatts = ComputedLinkData::dbmToWatts(static_cast<double>(noisePower));
     capacity = pow(10, 6) * log2(1 + signalWatts / noiseWatts);
 }
 
+/**
+ * Compute Transmission Delay
+ */
 void ComputedLinkData::computeTransmissionDelay() {
     transmissionTime = packetSize / capacity * pow(10, 3);
 }
 
+/**
+ * Compute Propagation Delay
+ */
 void ComputedLinkData::computePropagationDelay() {
     propagationTime = lengthKM / (velocity * pow(10, 4));
 }
 
+/**
+ * Compute all delay in proper sequence
+ */
 void ComputedLinkData::compute() {
     computeCapacity();
     computeTransmissionDelay();
     computePropagationDelay();
 }
 
+/**
+ * Get delay message
+ * @return delay message in CSV like
+ */
 string ComputedLinkData::getDelayString() {
     return to_string(transmissionDelay()) + "," +
         to_string(propagationDelay()) + "," +

@@ -25,6 +25,9 @@
 using namespace std;
 #endif /* TCPChildSocket_hpp */
 
+/**
+ * Encapsulate TCP child socket
+ */
 class TCPChildSocket {
 public:
     TCPChildSocket(int, struct sockaddr_in);

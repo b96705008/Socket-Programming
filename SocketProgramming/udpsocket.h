@@ -25,6 +25,9 @@ using namespace std;
 
 #endif /* udpsocket_h */
 
+/**
+ * Encapsulate UDP socket funcions
+ */
 class UDPSocket {
 public:
     UDPSocket();

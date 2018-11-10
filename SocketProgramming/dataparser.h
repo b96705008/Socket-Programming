@@ -26,8 +26,11 @@
 using namespace std;
 #endif /* DataParser_hpp */
 
+/**
+ * Used to process string data
+ */
 class DataParser {
 public:
-    static string delimeter;
-    static vector<string> splitCSVLine(string);
+    static string delimeter; // delimeter to split field in string
+    static vector<string> splitCSVLine(string); // split csv like string to fields
 };

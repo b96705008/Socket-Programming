@@ -62,7 +62,10 @@ int main(int argc, const char *argv[]) {
     forwardServer.bindAndListen(LOCAL_ADDR, AWS_CLIENT_TCP_PORT);
     
     while (true) {
+        // accept and get a TCPChild Socket instance
         TCPChildSocket *childSocket = forwardServer.acceptConnection();
+        
+        // receive and process query from client
         childSocket->recvData();
         string clientInput = childSocket->getDataString();
         vector<string> tokens = DataParser::splitCSVLine(clientInput);
@@ -70,6 +73,7 @@ int main(int argc, const char *argv[]) {
         if (tokens.size() < 3) {
             childSocket->sendData(BAD_REQUEST);
         } else {
+            // parse client message
             int clientPort = childSocket->getClientPort();
             string requestLinkID = tokens[0];
             string fileSize = tokens[1];
@@ -81,9 +85,11 @@ int main(int argc, const char *argv[]) {
             monitorSocket->sendData(string(CLIENT_INPUT) + "," + clientInput);
             printf("The AWS sent link ID=<%s>, size=<%s>, and power=<%s> to the monitor using TCP over port <%d>\n", requestLinkID.c_str(), fileSize.c_str(), signalPower.c_str(), monitorPort);
             
+            // query serverA and serverB for link profile
             LinkData data;
             bool found = queryLinkData(requestLinkID, queryClient, backendA, backendB, data);
             if (found) {
+                // request computing delay and get result from serverC
                 string resp = requestForComputing(data, fileSize, signalPower, queryClient, backendC);
                 vector<string> delays = DataParser::splitCSVLine(resp);
                 childSocket->sendData(delays[2]);
@@ -94,6 +100,7 @@ int main(int argc, const char *argv[]) {
                 printf("The AWS sent detailed results to the monitor using TCP over port <%d>\n", monitorPort);
                 
             } else {
+                // respond client with NOT_FOUND
                 childSocket->sendData(NOT_FOUND);
                 
                 // log not found
@@ -108,6 +115,10 @@ int main(int argc, const char *argv[]) {
     return 0;
 }
 
+/**
+ * Return Address instance by port
+ * @param port the port number of socket
+ */
 struct sockaddr_in getServerAddr(int port) {
     struct sockaddr_in info;
     bzero(&info, sizeof(info));
@@ -117,6 +128,15 @@ struct sockaddr_in getServerAddr(int port) {
     return info;
 }
 
+/**
+ * Request computing result to serverC,
+ * given link data, client input, and connection instances,
+ * @param data Link data
+ * @param fileSize file size
+ * @param signalPower signal power
+ * @param client aws UDP socket instance
+ * @param serverC Address Instance of serverC
+ */
 string requestForComputing(LinkData &data, string fileSize, string signalPower,
                          UDPSocket &client, struct sockaddr_in &serverC) {
     string dataToComputed = data.getDataString() + "," + fileSize + "," + signalPower;
@@ -130,6 +150,14 @@ string requestForComputing(LinkData &data, string fileSize, string signalPower,
     return resp;
 }
 
+/**
+ * Query Link profile data to both serverA and serverB
+ * @param id link id
+ * @param client aws UDP socket instance
+ * @param serverA Address Instance of serverA
+ * @param serverB Address Instance of serverB
+ * @param data Link data variable to be copied to
+ */
 bool queryLinkData(string id, UDPSocket &client,
                      struct sockaddr_in &serverA, struct sockaddr_in &serverB,
                      LinkData &data) {
@@ -153,6 +181,14 @@ bool queryLinkData(string id, UDPSocket &client,
     return found;
 }
 
+/**
+ * Query Link profile data to specific server
+ * @param id link id
+ * @param name server name (A or B)
+ * @param client aws UDP socket instance
+ * @param serverInfo Address Instance of server
+ * @param data Link data variable to be copied to
+ */
 bool queryLinkDataFromServer(string id, string name, UDPSocket &client, struct sockaddr_in &serverInfo, LinkData &data) {
     bool isSuccess = client.sendData(serverInfo, id);
     printf("The AWS sent link ID=<%s> to Backend-Server <%s> using UDP over port <%d>\n", id.c_str(), name.c_str(), ntohs(serverInfo.sin_port));

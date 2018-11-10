@@ -15,7 +15,9 @@
 #include "linkdata.h"
 #endif /* ComputedLinkData_hpp */
 
-
+/**
+ * Represent a computable link data (delay)
+ */
 class ComputedLinkData : public LinkData {
 public:
     static double dbmToWatts(double);
@@ -48,8 +50,11 @@ public:
     string getDelayString();
 
 private:
+    // given by users
     float packetSize;
     float signalPower;
+    
+    // computed result
     double capacity;
     double transmissionTime;
     double propagationTime;

@@ -25,17 +25,17 @@ int main() {
     // init variable
     struct sockaddr_in clientInfo;
 
-    // create socket
+    // create and bind socket
     UDPSocket server;
     if (server.getFD() == -1) {
         exit(1);
     }
     server.bindSocket(LOCAL_ADDR, SERVER_C_UDP_PORT);
     
-    // recv data
     printf("The Server C is up and running using UDP on port <%d>.\n", SERVER_C_UDP_PORT);
     
     while (true) {
+        // recv data
         bool isSuccess = server.recvData(clientInfo);
         
         if (!isSuccess) {

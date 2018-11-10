@@ -16,10 +16,15 @@ LinkData::LinkData() {
     noisePower = 0.0;
 }
 
+
 LinkData::LinkData(vector<string> *tokens) {
     setProperties(tokens);
 }
 
+/**
+ * Set properties from vector
+ * @param tokens field values (linkID, bandwidth, ...)
+ */
 void LinkData::setProperties(vector<string> *tokens) {
     int i = 0;
     for (vector<string>::iterator it = tokens->begin();
@@ -40,10 +45,18 @@ void LinkData::setProperties(vector<string> *tokens) {
     }
 }
 
+/**
+ * Get Link ID
+ * @return link id
+ */
 int LinkData::id() {
     return linkID;
 }
 
+/**
+ * Get Link Profile string
+ * @return data string
+ */
 string LinkData::getDataString() {
     return to_string(linkID) + "," +
     to_string(bandwidth) + "," +

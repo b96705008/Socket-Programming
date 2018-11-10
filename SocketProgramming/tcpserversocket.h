@@ -27,6 +27,9 @@ using namespace std;
 
 #endif /* TCPSocket_hpp */
 
+/**
+ * Encapsulate TCP parent socket
+ */
 class TCPServerSocket {
 public:
     TCPServerSocket();

@@ -17,6 +17,10 @@ LinkDataset::LinkDataset(string filename) {
     loadData(fin);
 }
 
+/**
+ * Load data from file
+ * @param fin file input stream
+ */
 void LinkDataset::loadData(ifstream &fin) {
     string line = "";
     while (getline(fin, line)) {
@@ -26,10 +30,18 @@ void LinkDataset::loadData(ifstream &fin) {
     }
 }
 
+/**
+ * Check if contains specific link id
+ * @return if contains
+ */
 bool LinkDataset::containsID(int linkID) {
     return dataMap.find(linkID) != dataMap.end();
 }
 
+/**
+ * Search link data and return
+ * @return link data
+ */
 LinkData LinkDataset::get(int linkID) {
     return dataMap.find(linkID)->second;
 }

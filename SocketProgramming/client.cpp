@@ -26,6 +26,8 @@ int main(int argc, char *argv[]) {
         cerr << "number of argument should be 3" << endl;
         exit(1);
     }
+    
+    // create query string
     string query = string(argv[1]) + ","
         + string(argv[2]) + ","
         + string(argv[3]);
@@ -35,7 +37,7 @@ int main(int argc, char *argv[]) {
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     
     if (sockfd == -1) {
-        printf("Fail to create a socket.");
+        //printf("Fail to create a socket.");
         exit(1);
     }
     
@@ -46,24 +48,27 @@ int main(int argc, char *argv[]) {
     awsInfo.sin_addr.s_addr = inet_addr(LOCAL_ADDR);
     awsInfo.sin_port = htons(AWS_CLIENT_TCP_PORT);
     
-    // connect server
+    // connect aws
     int err = connect(sockfd, (struct sockaddr *)&awsInfo, sizeof(awsInfo));
     if (err == -1) {
-        printf("AWS Connection error");
+        //printf("AWS Connection error");
+        exit(1);
     }
     cout << "The client is up and running." << endl;
     
-    // send message to server
+    // init buffer
     ssize_t numbytes;
     char *sendMessage = new char[query.length()+1];
     strcpy(sendMessage, query.c_str());
     char receiveMessage[MAXBUFLEN] = {};
     
+    //send message to aws
     send(sockfd, sendMessage, strlen(sendMessage), 0);
     delete [] sendMessage;
     printf("The client sent link ID=<%s>, size=<%s>, and power=<%s> to AWS\n",
            argv[1], argv[2], argv[3]);
     
+    // receive response from aws
     numbytes = recv(sockfd, receiveMessage, MAXBUFLEN-1, 0);
     receiveMessage[numbytes] = '\0';
     string resp = string(receiveMessage);

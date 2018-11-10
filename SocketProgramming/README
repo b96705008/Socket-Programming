@@ -5,61 +5,60 @@
 * USC ID: 3570655162
 
 ## What I have done?
-In this project, my goal is to create a service which can respond the end-to-end delay for client
-given request. I follow the architecture requirement and developed 4 servers, 1 monitor, and a client
-program. They serve different roles:
+In this project, my goal is to create a service which can respond the end-to-end delay for client given request. I follow the architecture requirement and developed 4 servers, 1 monitor, and a client program. They serve different roles. We discuss these roles as below:
 
 1. serverA and serverB
 They load link data from files and run as UDP server. They provide the service of searching for link profile. Each of they keep part of data, so aws would request both of them for the any query from client.
 
-
 2. serverC
-It would compute transmission delay, propagation delay, and end-to-end delay when recived link profile, file size, and signal power. It would respond the delay with unit in million second. It also run in UDP service.
+Once receiving request for computing for given link profile, file size, and signal power, it would compute transmission delay, propagation delay, and end-to-end delay then respond. The unit of delay would be million second. It runs un UDP service.
 
 3. aws
-It is the core of the server architecture, it can query the link profile, request for computing, log message to monitor, and respond to client. When it communicate with server A, B, C, it acts as UDP client.
-It also create 2 TCP sockets to wait for the connection from monitor and client. However, it only accept one monitor then go to serve for many clients. 
+It is the core of the server architecture. It would receive the delay query from client, then query the link profile data from serverA and serverB, request for computing from serverC, log message to monitor, and respond end-to-end delay to client. When it communicate with server A, B, C, it acts as UDP client. It also creates 2 TCP sockets that wait for the connection from monitor and client. However, it only accept one monitor. After accepting monitor, it would go to serve for multiple queries sent from clients. 
 
 4. monitor
-When aws receives client's request and computing result, it would forward message to monitor. Monitor would get the detail delay messages, including transmission delay, propagation delay, and end-to-end delay. This is different than client. It acts as TCP client that would connect to aws when boot up. The aws server should start before monitor.
+When aws receives client's request and computing result, it would forward message to monitor. Monitor would get the detail delay messages, including transmission delay, propagation delay, and end-to-end delay, then print the information. The architecture of monitor is different from client. It acts as TCP client that would connect to aws when boot up and print for every message sent from aws. Therefore, monitor should start after the aws server.
 
 5. client
-This is the program which send link id, file size, and signal power given by user, and expect to get delay result from aws. If link id doesn't exist in serverA and serverB's storage, then aws would respond with not found message. It act as a TCP client, but it can be used repeatedlly. Once it get the response, then it would stop.
+This is the program which can send link id, file size, and signal power given by user, and expect to get delay result from aws. If link id doesn't exist in serverA and serverB's storage, then aws would respond with "NOT_FOUND" message. It act as a TCP client, and it can be used repeatedly. Once it get the response, then it would close and stop.
 
 ## Code files and Program archtiecture
-In order to prevent me from writing repeated code and have clear design, I used Object-Oriented design on this project. So I used more files and class in C++ than required.
+In order to prevent me from repeatedly writing same code, I used Object-Oriented design on this project. This would also make the whole project architecture more clear. So I used many files that contains class that encapsulate repeated logic and can be used by other main program. Below are the introduction of these files:
 
 * defs.h
-This is conifg file. I put the static port, IP, and response message in this file. It would be used by many of other servers and client programs.
+This is a conifg file. I define static port, server IP, and response message in this file. It would be used by many of other servers and client programs.
 
 * dataparser.h, dataparser.cpp
-This is a utilities tool, which process message to string, buffer, and vector.
+This is a utilities tool, which process message to/from string, buffer, and vector format.
 
 * linkdata.h, linkdata.cpp
-This file contains the class that store each link profile data. It would be used by serverA and serverB.
+This file contains the class: LinkData, which represent and store each link profile data. It would be used by serverA and serverB.
 
 * computedlinkdata.h, computedlinkdata.cpp
-This file contains the class that inherents from linkdata, and extend it with packet size and signal power. The class implements many delay computation methods, which would be used by serverC.
+This file contains the class: ComputedLinkData, which inherents from LinkData, and extend it with packet size and signal power. The class implements many delay computation methods, which would be used by serverC.
 
 * udpsocket.h, udpsocket.cpp
-Writing UDP sockets repeatedly would not be good idea. We should use it in serverA, serverB, serverC, and aws. Therefore, I encapsulate the UDP socket into the UDPSocket class. We can easily to create a UDP socket by only given port and address.
+Writing UDP sockets repeatedly would not be a good idea. We will use it in many programs, including serverA, serverB, serverC, and aws. Therefore, I encapsulate the UDP socket functions into the UDPSocket class. With UDPSocket class, we can easily create a UDP socket by only given port and address.
 
-* tcpserversocket, tcpchildsocket
-When create tcp socket for server, it is also a good idea to encapsulate it. However, TCP has child sockets, which serves different roles from parent socket. Therefore, I design two different tcp socket class for them to use. This would be used in aws server.
+* tcpserversocket.cpp, tcpchildsocket.cpp
+It is also a good idea to encapsulate TCP socket funcions. However, TCP socket is more complicated that it can generate child sockets, which serves different roles from parent socket. Therefore, I design two different tcp socket class for them to use, TCPServerSocket is for parent socket and it would generate TCPChildSocket instance. This would be used by aws server.
 
 * serverA.cpp, serverB.cpp, serverC.cpp, aws.cpp, monitor.cpp, client.cpp
-They contain the main funcion and serve the role as the requirement asks. 
+They contain the main funcion and serve the role as the architecture requirements. 
 
 ## The format of all the messages exchanged
-I serialize all the message into string, then send in char buffer. There 4 parts of message format to be exhanged.
+I serialize all the message into string, then send in char buffer. There are four parts of message format to be exhanged.
 
 1. client and aws
 client would send "linkID,packetSize,signalPower" to aws.
-aws would respond with 2 types of message: (1) NOT_FOUND, (2) "delay"
+aws would respond with 2 types of message: 
+    (1) NOT_FOUND, (2) "delay"
 
 2. aws and serverA or serverB
 aws would send "linkID" to them.
-serverA or serverB would respond with 2 types of message: (1) NOT_FOUND, (2) "linkID,bandwidth,lengthKM,velocity,noisePower"
+serverA or serverB would respond with 2 types of message: 
+    (1) NOT_FOUND, 
+    (2) "linkID,bandwidth,lengthKM,velocity,noisePower"
 
 3. aws and serverC
 aws would send "linkID,bandwidth,lengthKM,velocity,noisePower,fileSize,signalPower" to serverC.
@@ -71,7 +70,7 @@ aws would send 3 types of message to monitor (first part means message purpose):
     (2) "DELAY_RESULT,transmissionDelay,propagationDelay,endToEndDelay"
     (3) "NOT_FOUND,linkID"
 
-Those programs would dataparser to process most of the messages.
+Those programs would use dataparser to process the messages.
 
 ## Reused Code
 I refer some codes from http://www.beej.us/guide/bgnet, especially chapter 6. Client-Server Background.

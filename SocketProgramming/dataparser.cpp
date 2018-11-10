@@ -11,6 +11,11 @@ using namespace std;
 
 string DataParser::delimeter = ",";
 
+/**
+ * Split CSV String into multiple fields stored in vector
+ * @param line csv line string
+ * @return fields stored in vector
+ */
 vector<string> DataParser::splitCSVLine(string line) {
     vector<string> tokens;
     string token;

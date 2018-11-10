@@ -20,11 +20,11 @@
 using namespace std;
 #endif /* LinkDataset_hpp */
 
+/**
+ * Represent a set of link data, which acts like a database
+ */
 class LinkDataset {
-public:
-//    static string delimeter;
-//    static vector<string> splitCSVLine(string);
-    
+public:    
     LinkDataset(string);
     
     bool containsID(int);
@@ -32,5 +32,5 @@ public:
 
 private:
     void loadData(ifstream &);
-    unordered_map<int, LinkData> dataMap;
+    unordered_map<int, LinkData> dataMap; // map link id to link data instance
 };

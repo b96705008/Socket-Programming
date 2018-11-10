@@ -14,14 +14,25 @@ TCPChildSocket::TCPChildSocket(int clientSockfd, struct sockaddr_in their_addr) 
     clientInfo = their_addr;
 }
 
+/**
+ * Close socket when being destroyed
+ */
 TCPChildSocket::~TCPChildSocket() {
     close(sockfd);
 }
 
+/**
+ * Get socket file descriptor
+ * @return socket file descriptor
+ */
 int TCPChildSocket::getFD() {
     return sockfd;
 }
 
+/**
+ * Receive data from client
+ * @return if successfully receive data
+ */
 bool TCPChildSocket::recvData() {
     numbytes = recv(sockfd, buf, MAXBUFLEN-1, 0);
     if (numbytes == -1) {
@@ -33,6 +44,11 @@ bool TCPChildSocket::recvData() {
     return true;
 }
 
+/**
+ * Send data to the client
+ * @param data data to send
+ * @return if successfully send data
+ */
 bool TCPChildSocket::sendData(string data) {
     char *inputBuf = new char[data.length()+1];
     strcpy(inputBuf, data.c_str());
@@ -47,11 +63,19 @@ bool TCPChildSocket::sendData(string data) {
     return true;
 }
 
+/**
+ * Get current received data string
+ * @return data string
+ */
 string TCPChildSocket::getDataString() {
     string rawStr(buf);
     return rawStr;
 }
 
+/**
+ * Get client's port number
+ * @return port number in int type
+ */
 int TCPChildSocket::getClientPort() {
     return ntohs(clientInfo.sin_port);
 }
