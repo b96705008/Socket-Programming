@@ -93,7 +93,7 @@ int main(int argc, const char *argv[]) {
                 string resp = requestForComputing(data, fileSize, signalPower, queryClient, backendC);
                 vector<string> delays = DataParser::splitCSVLine(resp);
                 childSocket->sendData(delays[2]);
-                printf("The AWS sent delay=<%s>ms to the client using TCP over port <%d>\n", delays[2].c_str(), clientPort);
+                printf("The AWS sent delay=<%.2f>ms to the client using TCP over port <%d>\n", stof(delays[2]), clientPort);
                 
                 // log computed result
                 monitorSocket->sendData(string(DELAY_RESULT) + "," + requestLinkID + "," + resp);

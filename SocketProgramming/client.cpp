@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     
     if (sockfd == -1) {
-        //printf("Fail to create a socket.");
+        perror("socket");
         exit(1);
     }
     
@@ -47,14 +47,26 @@ int main(int argc, char *argv[]) {
     awsInfo.sin_family = PF_INET;
     awsInfo.sin_addr.s_addr = inet_addr(LOCAL_ADDR);
     awsInfo.sin_port = htons(AWS_CLIENT_TCP_PORT);
+
     
     // connect aws
     int err = connect(sockfd, (struct sockaddr *)&awsInfo, sizeof(awsInfo));
     if (err == -1) {
-        //printf("AWS Connection error");
+        perror("connect");
         exit(1);
     }
     cout << "The client is up and running." << endl;
+
+    // my address
+    // struct sockaddr_in my_addr;
+    // bzero(&my_addr, sizeof(my_addr));
+    // socklen_t addrlen = sizeof(my_addr);
+    // if (getsockname(sockfd, (struct sockaddr*)&my_addr, &addrlen) == -1) {
+    //     perror("getsockname");
+    //     exit(1);
+    // } else {
+    //     cout << ntohs(my_addr.sin_port) << endl;
+    // }
     
     // init buffer
     ssize_t numbytes;
@@ -76,7 +88,7 @@ int main(int argc, char *argv[]) {
     if (resp == NOT_FOUND) {
         printf("Found no matches for link <%s>\n", argv[1]);
     } else {
-        printf("The delay for link <%s> is <%s>ms\n", argv[1], receiveMessage);
+        printf("The delay for link <%s> is <%.2f>ms\n", argv[1], stof(resp));
     }
     
     // close connection
