@@ -71,7 +71,7 @@ ComputedLinkData::ComputedLinkData(vector<string> *tokens) {
 void ComputedLinkData::computeCapacity() {
     double signalWatts = ComputedLinkData::dbmToWatts(static_cast<double>(signalPower));
     double noiseWatts = ComputedLinkData::dbmToWatts(static_cast<double>(noisePower));
-    capacity = pow(10, 6) * log2(1 + signalWatts / noiseWatts);
+    capacity = bandwidth * pow(10, 6) * log2(1 + signalWatts / noiseWatts);
 }
 
 /**
