@@ -41,6 +41,7 @@ int main(int argc, const char *argv[]) {
     // Create UDP client
     UDPSocket queryClient;
     if (queryClient.getFD() == -1) {
+        perror("UDP socket");
         exit(1);
     }
     queryClient.bindSocket(LOCAL_ADDR, AWS_UDP_PORT);
@@ -48,15 +49,22 @@ int main(int argc, const char *argv[]) {
     // create TCP server for monitor and wait for connection
     TCPServerSocket logServer;
     if (logServer.getFD() == -1) {
+        perror("monitor socket");
         exit(1);
     }
     logServer.bindAndListen(LOCAL_ADDR, AWS_MONITOR_TCP_PORT);
     TCPChildSocket *monitorSocket = logServer.acceptConnection();
+    while (monitorSocket->getFD() == -1) {
+        perror("monitor accept");
+        exit(1);
+    }
+    //TCPChildSocket *monitorSocket = logServer.acceptConnection();
     int monitorPort = monitorSocket->getClientPort();
     
     // Create TCP server for client
     TCPServerSocket forwardServer;
     if (forwardServer.getFD() == -1) {
+        perror("client socket");
         exit(1);
     }
     forwardServer.bindAndListen(LOCAL_ADDR, AWS_CLIENT_TCP_PORT);

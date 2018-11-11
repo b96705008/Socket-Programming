@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     
     if (sockfd == -1) {
-        printf("Fail to create a socket.");
+        perror("socket");
         exit(1);
     }
     
@@ -39,7 +39,8 @@ int main(int argc, char *argv[]) {
     // connect server
     int err = connect(sockfd, (struct sockaddr *)&awsInfo, sizeof(awsInfo));
     if (err == -1) {
-        printf("AWS Connection error");
+        perror("connect");
+        exit(1);
     }
     cout << "The monitor is up and running." << endl;
     
