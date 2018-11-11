@@ -1,44 +1,44 @@
 all: compile_aws compile_client compile_monitor compile_serverA compile_serverB compile_serverC
 
-binaries = prog_serverA prog_serverB prog_serverC prog_aws prog_monitor client
+binaries = serverAoutput serverBoutput serverCoutput awsoutput monitoroutput client
 
 .PHONY: binaries
 
 clean: 
 	-rm *.o $(binaries)
 
-serverA: prog_serverA
-	./prog_serverA
+serverA: serverAoutput
+	./serverAoutput
 
-serverB: prog_serverB
-	./prog_serverB
+serverB: serverBoutput
+	./serverBoutput
 
-serverC: prog_serverC
-	./prog_serverC
+serverC: serverCoutput
+	./serverCoutput
 
-aws: prog_aws
-	./prog_aws
+aws: awsoutput
+	./awsoutput
 
-monitor: prog_monitor
-	./prog_monitor
+monitor: monitoroutput
+	./monitoroutput
 
 compile_aws: aws.o udpsocket.o linkdataset.o linkdata.o dataparser.o tcpserversocket.o tcpchildsocket.o
-	g++ -std=c++11 -g -o prog_aws aws.o udpsocket.o linkdataset.o linkdata.o dataparser.o tcpserversocket.o tcpchildsocket.o
+	g++ -std=c++11 -g -o awsoutput aws.o udpsocket.o linkdataset.o linkdata.o dataparser.o tcpserversocket.o tcpchildsocket.o
 
 compile_client: client.o
 	g++ -std=c++11 -g -o client client.o
 
 compile_monitor: monitor.o dataparser.o
-	g++ -std=c++11 -g -o prog_monitor monitor.o dataparser.o
+	g++ -std=c++11 -g -o monitoroutput monitor.o dataparser.o
 
 compile_serverA: serverA.o udpsocket.o linkdataset.o linkdata.o dataparser.o
-	g++ -std=c++11 -g -o prog_serverA serverA.o udpsocket.o linkdataset.o linkdata.o dataparser.o
+	g++ -std=c++11 -g -o serverAoutput serverA.o udpsocket.o linkdataset.o linkdata.o dataparser.o
 
 compile_serverB: serverB.o udpsocket.o linkdataset.o linkdata.o dataparser.o
-	g++ -std=c++11 -g -o prog_serverB serverB.o udpsocket.o linkdataset.o linkdata.o dataparser.o
+	g++ -std=c++11 -g -o serverBoutput serverB.o udpsocket.o linkdataset.o linkdata.o dataparser.o
 
 compile_serverC: serverC.o udpsocket.o computedlinkdata.o linkdata.o dataparser.o
-	g++ -std=c++11 -g -o prog_serverC serverC.o udpsocket.o computedlinkdata.o linkdata.o dataparser.o
+	g++ -std=c++11 -g -o serverCoutput serverC.o udpsocket.o computedlinkdata.o linkdata.o dataparser.o
 
 aws.o: aws.cpp linkdata.h udpsocket.h dataparser.h defs.h
 	g++ -std=c++11 -g -c aws.cpp
