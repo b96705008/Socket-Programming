@@ -21,7 +21,8 @@
 class ComputedLinkData : public LinkData {
 public:
     static double dbmToWatts(double);
-    
+    static double roundTo2ndDecimal(double);
+
     ComputedLinkData();
     ComputedLinkData(int, float, float, float, float, float, float);
     ComputedLinkData(vector<string> *tokens);

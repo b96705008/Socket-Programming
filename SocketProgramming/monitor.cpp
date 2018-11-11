@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
     while (true) {
         // get and parse message
         numbytes = recv(sockfd, message, MAXBUFLEN-1, 0);
-        if (numbytes == 0) {
+        if (numbytes <= 0) {
             break;
         }
         message[numbytes] = '\0';

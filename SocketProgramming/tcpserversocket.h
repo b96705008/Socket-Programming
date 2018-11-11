@@ -6,8 +6,8 @@
 //  Copyright © 2018 Tai-Yi Kuo. All rights reserved.
 //
 
-#ifndef tcpsocket_h
-#define tcpsocket_h
+#ifndef tcpserversocket_h
+#define tcpserversocket_h
 
 #include <stdio.h>
 #include <stdlib.h>

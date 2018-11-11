@@ -16,7 +16,11 @@ using namespace std;
  */
 double ComputedLinkData::dbmToWatts(double dbm) {
     double exp = dbm / 10.0;
-    return pow(10.0, exp);
+    return pow(10.0, exp) / 1000.0;
+}
+
+double ComputedLinkData::roundTo2ndDecimal(double value) {
+    return roundf(value * 100) / 100;
 }
 
 ComputedLinkData::ComputedLinkData() {
@@ -85,7 +89,7 @@ void ComputedLinkData::computeTransmissionDelay() {
  * Compute Propagation Delay
  */
 void ComputedLinkData::computePropagationDelay() {
-    propagationTime = lengthKM / (velocity * pow(10, 4));
+    propagationTime = lengthKM / (velocity * 10.0);
 }
 
 /**
