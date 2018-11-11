@@ -12,7 +12,6 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
-using namespace std;
 #endif /* LinkData_hpp */
 
 /**
@@ -21,11 +20,11 @@ using namespace std;
 class LinkData {
 public:
     LinkData();
-    LinkData(vector<string>*);
+    LinkData(std::vector<std::string>*);
     
     int id(); // get link id
-    void setProperties(vector<string>*); // set properties from vector
-    string getDataString(); // get data string from profile
+    void setProperties(std::vector<std::string>*); // set properties from vector
+    std::string getDataString(); // get data string from profile
     
 protected:
     int linkID;

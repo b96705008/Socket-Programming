@@ -18,23 +18,21 @@ TCPServerSocket::TCPServerSocket() {
  * Bind socket
  * @param address address to bind
  * @param port port to bind
- * @param qlim queue limit
+ * @return error code
  */
-void TCPServerSocket::bindAndListen(const char *address, int port, int qlim) {
+int TCPServerSocket::bindSocket(const char *address, int port) {
     info.sin_family = PF_INET;
     info.sin_addr.s_addr = inet_addr(address);
     info.sin_port = htons(port);
-    bind(sockfd, (struct sockaddr *)&info, sizeof(info));
-    listen(sockfd, qlim);
+    return bind(sockfd, (struct sockaddr *)&info, sizeof(info));
 }
 
 /**
- * Bind socket
- * @param address address to bind
- * @param port port to bind
+ * Start to listen for connection
+ * @return error code
  */
-void TCPServerSocket::bindAndListen(const char *address, int port) {
-    bindAndListen(address, port, MAX_QUEUE_LIMIT);
+int TCPServerSocket::listenSocket() {
+    return listen(sockfd, MAX_QUEUE_LIMIT);
 }
 
 /**

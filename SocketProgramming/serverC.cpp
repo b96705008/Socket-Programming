@@ -28,9 +28,14 @@ int main() {
     // create and bind socket
     UDPSocket server;
     if (server.getFD() == -1) {
+        perror("socket");
         exit(1);
     }
-    server.bindSocket(LOCAL_ADDR, SERVER_C_UDP_PORT);
+
+    if (server.bindSocket(LOCAL_ADDR, SERVER_C_UDP_PORT)) {
+        perror("bind");
+        exit(1);
+    }
     
     printf("The Server C is up and running using UDP on port <%d>.\n", SERVER_C_UDP_PORT);
     

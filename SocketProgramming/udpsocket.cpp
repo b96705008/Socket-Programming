@@ -18,12 +18,13 @@ UDPSocket::UDPSocket() {
  * Bind socket
  * @param address address to bind
  * @param port port to bind
+ * @return error code
  */
-void UDPSocket::bindSocket(const char * address, int port) {
+int UDPSocket::bindSocket(const char * address, int port) {
     info.sin_family = PF_INET;
     info.sin_addr.s_addr = inet_addr(address);
     info.sin_port = htons(port);
-    bind(sockfd, (struct sockaddr *)&info, sizeof(info));
+    return bind(sockfd, (struct sockaddr *)&info, sizeof(info));
 }
 
 /**

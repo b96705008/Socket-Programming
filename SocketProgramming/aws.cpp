@@ -52,7 +52,21 @@ int main(int argc, const char *argv[]) {
         perror("monitor socket");
         exit(1);
     }
-    logServer.bindAndListen(LOCAL_ADDR, AWS_MONITOR_TCP_PORT);
+    
+    if (logServer.bindSocket(LOCAL_ADDR, AWS_MONITOR_TCP_PORT)) {
+        perror("bind monitor socket");
+        exit(1);
+    }
+
+    if (logServer.listenSocket()) {
+        perror("listen monitor socket");
+        exit(1);
+    }
+
+    // if (!logServer.bindAndListen(LOCAL_ADDR, AWS_MONITOR_TCP_PORT)) {
+    //     exit(1);
+    // }
+
     TCPChildSocket *monitorSocket = logServer.acceptConnection();
     while (monitorSocket->getFD() == -1) {
         perror("monitor accept");
@@ -67,11 +81,31 @@ int main(int argc, const char *argv[]) {
         perror("client socket");
         exit(1);
     }
-    forwardServer.bindAndListen(LOCAL_ADDR, AWS_CLIENT_TCP_PORT);
+
+    if (forwardServer.bindSocket(LOCAL_ADDR, AWS_CLIENT_TCP_PORT)) {
+        perror("bind client socket");
+        exit(1);
+    }
+
+    if (forwardServer.listenSocket()) {
+        perror("listen client socket");
+        exit(1);
+    }
+
+    // if (!forwardServer.bindAndListen(LOCAL_ADDR, AWS_CLIENT_TCP_PORT)) {
+    //     exit(1);
+    // }
     
     while (true) {
         // accept and get a TCPChild Socket instance
         TCPChildSocket *childSocket = forwardServer.acceptConnection();
+
+        // check error
+        if (childSocket->getFD() == -1) {
+            perror("child socket");
+            delete childSocket;
+            continue;
+        }
         
         // receive and process query from client
         childSocket->recvData();

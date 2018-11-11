@@ -22,7 +22,6 @@
 #include <iostream>
 #include <vector>
 #include "defs.h"
-using namespace std;
 #endif /* TCPChildSocket_hpp */
 
 /**
@@ -34,9 +33,9 @@ public:
     ~TCPChildSocket();
     
     int getFD();
-    string getDataString();
+    std::string getDataString();
     bool recvData();
-    bool sendData(string);
+    bool sendData(std::string);
     int getClientPort();
     
 private:

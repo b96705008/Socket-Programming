@@ -25,7 +25,7 @@ public:
 
     ComputedLinkData();
     ComputedLinkData(int, float, float, float, float, float, float);
-    ComputedLinkData(vector<string> *tokens);
+    ComputedLinkData(std::vector<std::string> *tokens);
     void compute();
     
     double transmissionDelay() {
@@ -48,7 +48,7 @@ public:
         return signalPower;
     }
     
-    string getDelayString();
+    std::string getDelayString();
 
 private:
     // given by users

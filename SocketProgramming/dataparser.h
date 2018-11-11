@@ -23,7 +23,6 @@
 #include <string>
 #include <iostream>
 #include <vector>
-using namespace std;
 #endif /* DataParser_hpp */
 
 /**
@@ -31,6 +30,6 @@ using namespace std;
  */
 class DataParser {
 public:
-    static string delimeter; // delimeter to split field in string
-    static vector<string> splitCSVLine(string); // split csv like string to fields
+    static std::string delimeter; // delimeter to split field in string
+    static std::vector<std::string> splitCSVLine(std::string); // split csv like string to fields
 };

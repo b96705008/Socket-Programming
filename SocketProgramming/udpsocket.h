@@ -21,8 +21,6 @@
 #include <iostream>
 #include <vector>
 #include "defs.h"
-using namespace std;
-
 #endif /* udpsocket_h */
 
 /**
@@ -31,11 +29,11 @@ using namespace std;
 class UDPSocket {
 public:
     UDPSocket();
-    void bindSocket(const char *, int);
+    int bindSocket(const char *, int);
     int getFD();
-    string getDataString();
+    std::string getDataString();
     bool recvData(struct sockaddr_in&);
-    bool sendData(struct sockaddr_in&, string);
+    bool sendData(struct sockaddr_in&, std::string);
     
 private:
     int sockfd;

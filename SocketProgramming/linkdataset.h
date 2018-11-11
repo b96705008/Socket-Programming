@@ -17,7 +17,6 @@
 #include <iostream>
 #include "linkdata.h"
 #include "dataparser.h"
-using namespace std;
 #endif /* LinkDataset_hpp */
 
 /**
@@ -25,12 +24,12 @@ using namespace std;
  */
 class LinkDataset {
 public:    
-    LinkDataset(string);
+    LinkDataset(std::string);
     
     bool containsID(int);
     LinkData get(int);
 
 private:
-    void loadData(ifstream &);
-    unordered_map<int, LinkData> dataMap; // map link id to link data instance
+    void loadData(std::ifstream &);
+    std::unordered_map<int, LinkData> dataMap; // map link id to link data instance
 };

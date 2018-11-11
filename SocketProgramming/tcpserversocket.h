@@ -23,8 +23,6 @@
 #include <vector>
 #include "tcpchildsocket.h"
 #include "defs.h"
-using namespace std;
-
 #endif /* TCPSocket_hpp */
 
 /**
@@ -33,8 +31,10 @@ using namespace std;
 class TCPServerSocket {
 public:
     TCPServerSocket();
-    void bindAndListen(const char *, int);
-    void bindAndListen(const char *, int, int);
+    int bindSocket(const char *, int);
+    int listenSocket();
+    // bool bindAndListen(const char *, int);
+    // bool bindAndListen(const char *, int, int);
     TCPChildSocket* acceptConnection();
     int getFD();
 
