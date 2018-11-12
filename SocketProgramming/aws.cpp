@@ -63,16 +63,12 @@ int main(int argc, const char *argv[]) {
         exit(1);
     }
 
-    // if (!logServer.bindAndListen(LOCAL_ADDR, AWS_MONITOR_TCP_PORT)) {
-    //     exit(1);
-    // }
-
     TCPChildSocket *monitorSocket = logServer.acceptConnection();
     while (monitorSocket->getFD() == -1) {
         perror("monitor accept");
         exit(1);
     }
-    //TCPChildSocket *monitorSocket = logServer.acceptConnection();
+    logServer.closeSocket();
     int monitorPort = monitorSocket->getClientPort();
     
     // Create TCP server for client
@@ -91,10 +87,6 @@ int main(int argc, const char *argv[]) {
         perror("listen client socket");
         exit(1);
     }
-
-    // if (!forwardServer.bindAndListen(LOCAL_ADDR, AWS_CLIENT_TCP_PORT)) {
-    //     exit(1);
-    // }
     
     while (true) {
         // accept and get a TCPChild Socket instance

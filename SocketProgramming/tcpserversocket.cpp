@@ -52,3 +52,10 @@ TCPChildSocket* TCPServerSocket::acceptConnection() {
     int clientSockfd = accept(sockfd, (struct sockaddr*) &clientInfo, &addrlen);
     return new TCPChildSocket(clientSockfd, clientInfo);
 }
+
+/**
+ * Close the parent socket
+ */
+void TCPServerSocket::closeSocket() {
+    close(sockfd);
+}

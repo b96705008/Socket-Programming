@@ -33,10 +33,9 @@ public:
     TCPServerSocket();
     int bindSocket(const char *, int);
     int listenSocket();
-    // bool bindAndListen(const char *, int);
-    // bool bindAndListen(const char *, int, int);
     TCPChildSocket* acceptConnection();
     int getFD();
+    void closeSocket();
 
 private:
     int sockfd;
