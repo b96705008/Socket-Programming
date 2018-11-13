@@ -19,6 +19,8 @@ TCPChildSocket::TCPChildSocket(int clientSockfd, struct sockaddr_in their_addr) 
  */
 TCPChildSocket::~TCPChildSocket() {
     close(sockfd);
+    bzero(&buf, sizeof(buf));
+    bzero(&clientInfo, sizeof(clientInfo));
 }
 
 /**

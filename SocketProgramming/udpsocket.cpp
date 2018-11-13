@@ -24,6 +24,13 @@ int UDPSocket::bindSocket(const char * address, int port) {
     info.sin_family = PF_INET;
     info.sin_addr.s_addr = inet_addr(address);
     info.sin_port = htons(port);
+
+    // refer from beej.us. reuse socket number when restart
+    int yes = 1;
+    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) == -1) {
+        perror("setsockopt");
+        exit(1);
+    }
     return bind(sockfd, (struct sockaddr *)&info, sizeof(info));
 }
 

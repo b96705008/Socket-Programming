@@ -55,17 +55,20 @@ int main(int argc, const char *argv[]) {
     
     if (logServer.bindSocket(LOCAL_ADDR, AWS_MONITOR_TCP_PORT)) {
         perror("bind monitor socket");
+        logServer.closeSocket();
         exit(1);
     }
 
     if (logServer.listenSocket()) {
         perror("listen monitor socket");
+        logServer.closeSocket();
         exit(1);
     }
 
     TCPChildSocket *monitorSocket = logServer.acceptConnection();
     while (monitorSocket->getFD() == -1) {
         perror("monitor accept");
+        logServer.closeSocket();
         exit(1);
     }
     logServer.closeSocket();
@@ -80,14 +83,17 @@ int main(int argc, const char *argv[]) {
 
     if (forwardServer.bindSocket(LOCAL_ADDR, AWS_CLIENT_TCP_PORT)) {
         perror("bind client socket");
+        forwardServer.closeSocket();
         exit(1);
     }
 
     if (forwardServer.listenSocket()) {
         perror("listen client socket");
+        forwardServer.closeSocket();
         exit(1);
     }
     
+    // Start to accept every client query
     while (true) {
         // accept and get a TCPChild Socket instance
         TCPChildSocket *childSocket = forwardServer.acceptConnection();
@@ -143,6 +149,7 @@ int main(int argc, const char *argv[]) {
                 printf("The AWS sent No Match to the monitor and the client using TCP over ports <%d> and <%d>, respectively\n", monitorPort, clientPort);
             }
         }
+        // close child socket 
         delete childSocket;
     }
     

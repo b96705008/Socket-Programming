@@ -1,12 +1,15 @@
-# Socket Programming
+# EE450 Socket Programming Project, Fall 2018
 
 ## About Author
 * name: Tai-Yi Kuo
 * USC ID: 3570655162
 
 ## What I have done?
-In this project, my goal is to create a service which can respond the end-to-end delay for client given request. I follow the architecture requirement and developed 4 servers, 1 monitor, and a client program. They serve different roles. We discuss these roles as below:
 
+### Summary
+In this project, my goal is to create a service which can respond the end-to-end delay for client given request. I follow the architecture requirements and developed 4 servers, 1 monitor, and 1 client program. They serve different roles. We will discuss details on "Socket Programs" section.
+
+### Socket Programs
 1. serverA and serverB
 They load link data from files and run as UDP server. They provide the service of searching for link profile. Each of they keep part of data, so aws would request both of them for the any query from client.
 
@@ -14,13 +17,14 @@ They load link data from files and run as UDP server. They provide the service o
 Once receiving request for computing for given link profile, file size, and signal power, it would compute transmission delay, propagation delay, and end-to-end delay then respond. The unit of delay would be million second. It runs un UDP service.
 
 3. aws
-It is the core of the server architecture. It would receive the delay query from client, then query the link profile data from serverA and serverB, request for computing from serverC, log message to monitor, and respond end-to-end delay to client. When it communicate with server A, B, C, it acts as UDP client. It also creates 2 TCP sockets that wait for the connection from monitor and client. However, it only accept one monitor. After accepting monitor, it would go to serve for multiple queries sent from clients. 
+It is the core of the server architecture. It would receive the delay query from client, then query the link profile data from serverA and serverB, request for computing from serverC, log message to monitor, and respond end-to-end delay to client. When it communicate with server A, B, C, it acts as UDP client. It also creates 2 TCP sockets that wait for the connection from monitor and client. However, it only accept one monitor. After accepting monitor, it would go to serve for multiple queries sent from clients.
 
 4. monitor
-When aws receives client's request and computing result, it would forward message to monitor. Monitor would get the detail delay messages, including transmission delay, propagation delay, and end-to-end delay, then print the information. The architecture of monitor is different from client. It acts as TCP client that would connect to aws when boot up and print for every message sent from aws. Therefore, monitor should start after the aws server.
+When aws receives client's request and computing result, it would forward message to monitor. Monitor would get the detail of delay messages, including transmission delay, propagation delay, and end-to-end delay, then print the information. The architecture of monitor is different from client. It runs TCP client that would connect to aws when boot up and print for every message received from aws. Therefore, monitor should start after the boot up of aws server.
+There is a important thing, I make monitor to close socket and stop once aws is shutdown, because I think that make monitor to have close socket elegantly.
 
 5. client
-This is the program which can send link id, file size, and signal power given by user, and expect to get delay result from aws. If link id doesn't exist in serverA and serverB's storage, then aws would respond with "NOT_FOUND" message. It act as a TCP client, and it can be used repeatedly. Once it get the response, then it would close and stop.
+This is the program which can send link id, file size, and signal power given by user, and expect to get delay result from aws. If link id doesn't exist in serverA and serverB's storage, then aws would respond with "NOT_FOUND" message. It runs a TCP client when boot up, and it can be used repeatedly. Once it get the response and print result, then it would close and stop.
 
 ## Code files and Program archtiecture
 In order to prevent me from repeatedly writing same code, I used Object-Oriented design on this project. This would also make the whole project architecture more clear. So I used many files that contains class that encapsulate repeated logic and can be used by other main program. Below are the introduction of these files:
@@ -44,38 +48,52 @@ Writing UDP sockets repeatedly would not be a good idea. We will use it in many 
 It is also a good idea to encapsulate TCP socket funcions. However, TCP socket is more complicated that it can generate child sockets, which serves different roles from parent socket. Therefore, I design two different tcp socket class for them to use, TCPServerSocket is for parent socket and it would generate TCPChildSocket instance. This would be used by aws server.
 
 * serverA.cpp, serverB.cpp, serverC.cpp, aws.cpp, monitor.cpp, client.cpp
-They contain the main funcion and serve the role as the architecture requirements. 
+They are mains socket programs and serve the role as the architecture requirements. 
 
 ## The format of all the messages exchanged
-I serialize all the message into string, then send in char buffer. There are four parts of message format to be exhanged.
+I serialize all the message into string, then send in char buffer. 
+There are four parts of message format to be exhanged. 
+PS: <a> means a is variable
 
 1. client and aws
-client would send "linkID,packetSize,signalPower" to aws.
+client would send "<linkID>,<fileSize>,<signalPower>" to aws.
 aws would respond with 2 types of message: 
-    (1) NOT_FOUND, (2) "delay"
+    (1) NOT_FOUND
+    (2) "<endToEndDelay>"
 
 2. aws and serverA or serverB
 aws would send "linkID" to them.
 serverA or serverB would respond with 2 types of message: 
     (1) NOT_FOUND, 
-    (2) "linkID,bandwidth,lengthKM,velocity,noisePower"
+    (2) "<linkID>,<bandwidth>,<lengthKM>,<velocity>,<noisePower>"
 
 3. aws and serverC
-aws would send "linkID,bandwidth,lengthKM,velocity,noisePower,fileSize,signalPower" to serverC.
-serverC would respond with "transmissionDelay,propagationDelay,endToEndDelay"
+aws would send "<linkID>,<bandwidth>,<lengthKM>,<velocity>,<noisePower>,<fileSize>,<signalPower>" to serverC.
+serverC would respond with "<transmissionDelay>,<propagationDelay>,<endToEndDelay>"
 
 4. aws and monitor
 aws would send 3 types of message to monitor (first part means message purpose): 
-    (1) "CLIENT_INPUT,linkID,packetSize,signalPower"
-    (2) "DELAY_RESULT,transmissionDelay,propagationDelay,endToEndDelay"
-    (3) "NOT_FOUND,linkID"
+    (1) "CLIENT_INPUT,<linkID>,<fileSize>,<signalPower>"
+    (2) "DELAY_RESULT,<transmissionDelay>,<propagationDelay>,<endToEndDelay>"
+    (3) "NOT_FOUND,<linkID>"
 
 Those programs would use dataparser to process the messages.
 
 ## Reused Code
 I refer some codes from http://www.beej.us/guide/bgnet, especially chapter 6. Client-Server Background.
-However, I rewrite whole the program to make it fit the Object-Oriented architecture. This is what C++ different from C.
+However, I rewrite whole the program to make it fit the Object-Oriented architecture. This is what C++ can do.
 
+## How to Run
+```
+make clean // not necessary, but it is better for clean every compiled file
+make all // compile all files and creates executables
+make serverA
+make serverB
+make serverC
+make aws
+make monitor
 
+./client <LINK_ID> <SIZE> <POWER> // can execute repeatedly
+```
 
 
