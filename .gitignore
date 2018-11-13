@@ -199,7 +199,7 @@ serverCoutput
 awsoutput 
 monitoroutput
 client
-
+dist/
 # End of https://www.gitignore.io/api/c,c++,xcode
 
 
