@@ -85,7 +85,7 @@ However, I rewrite whole the program to make it fit the Object-Oriented architec
 
 ## How to Run
 ```
-make clean // not necessary, but it is better for clean every compiled file
+make clean // It is used for cleaning all compiled outputs
 make all // compile all files and creates executables
 make serverA
 make serverB
@@ -93,7 +93,7 @@ make serverC
 make aws
 make monitor
 
-./client <LINK_ID> <SIZE> <POWER> // can execute repeatedly
+./client <LINK_ID> <SIZE> <POWER> // can be executed repeatedly
 ```
 
 
