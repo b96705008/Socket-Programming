@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
         if (messageType == CLIENT_INPUT) {
             printf("The monitor received link ID=<%s>, size=<%s>, and power=<%s> from the AWS\n", tokens[1].c_str(), tokens[2].c_str(), tokens[3].c_str());
         } else if (messageType == DELAY_RESULT) {
-            printf("The result for link <%s>: Tt = <%.2f>ms, Tp = <%.2f>ms, Delay = <%.2f>ms\n", tokens[1].c_str(), stof(tokens[2]), stof(tokens[3]), stof(tokens[4]));
+            printf("The result for link <%s>: Tt = <%.2f>ms, Tp = <%.2f>ms, Delay = <%.2f>ms\n", tokens[1].c_str(), stod(tokens[2]), stod(tokens[3]), stod(tokens[4]));
         } else if (messageType == NOT_FOUND){
             printf("Found no matches for link <%s>\n", tokens[1].c_str());
         }

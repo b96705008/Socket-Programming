@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
     if (resp == NOT_FOUND) {
         printf("Found no matches for link <%s>\n", argv[1]);
     } else {
-        printf("The delay for link <%s> is <%.2f>ms\n", argv[1], stof(resp));
+        printf("The delay for link <%s> is <%.2f>ms\n", argv[1], stod(resp));
     }
     
     // close connection
