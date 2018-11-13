@@ -81,7 +81,8 @@ Those programs would use dataparser to process the messages.
 
 ## Reused Code
 I refer some codes from http://www.beej.us/guide/bgnet, especially chapter 6. Client-Server Background.
-However, I rewrite whole the program to make it fit the Object-Oriented architecture. This is what C++ can do.
+However, I rewrite all the socket code structure to make it fit the Object-Oriented architecture. 
+This is what C++ can do.
 
 ## How to Run
 ```

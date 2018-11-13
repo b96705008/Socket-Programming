@@ -200,6 +200,7 @@ awsoutput
 monitoroutput
 client
 dist/
+*.swp
 # End of https://www.gitignore.io/api/c,c++,xcode
 
 
