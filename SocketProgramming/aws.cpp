@@ -72,7 +72,7 @@ int main(int argc, const char *argv[]) {
         exit(1);
     }
     logServer.closeSocket();
-    int monitorPort = monitorSocket->getClientPort();
+    //int monitorPort = monitorSocket->getClientPort();
     
     // Create TCP server for client
     TCPServerSocket forwardServer;
@@ -114,16 +114,16 @@ int main(int argc, const char *argv[]) {
             childSocket->sendData(BAD_REQUEST);
         } else {
             // parse client message
-            int clientPort = childSocket->getClientPort();
+            //int clientPort = childSocket->getClientPort();
             string requestLinkID = tokens[0];
             string fileSize = tokens[1];
             string signalPower = tokens[2];
             
-            printf("The AWS received link ID=<%s>, size=<%s>, and power=<%s> from the client using TCP over port <%d>\n", requestLinkID.c_str(), fileSize.c_str(), signalPower.c_str(), clientPort);
+            printf("The AWS received link ID=<%s>, size=<%s>, and power=<%s> from the client using TCP over port <%d>\n", requestLinkID.c_str(), fileSize.c_str(), signalPower.c_str(), AWS_CLIENT_TCP_PORT);
             
             // log client input
             monitorSocket->sendData(string(CLIENT_INPUT) + "," + clientInput);
-            printf("The AWS sent link ID=<%s>, size=<%s>, and power=<%s> to the monitor using TCP over port <%d>\n", requestLinkID.c_str(), fileSize.c_str(), signalPower.c_str(), monitorPort);
+            printf("The AWS sent link ID=<%s>, size=<%s>, and power=<%s> to the monitor using TCP over port <%d>\n", requestLinkID.c_str(), fileSize.c_str(), signalPower.c_str(), AWS_MONITOR_TCP_PORT);
             
             // query serverA and serverB for link profile
             LinkData data;
@@ -133,11 +133,11 @@ int main(int argc, const char *argv[]) {
                 string resp = requestForComputing(data, fileSize, signalPower, queryClient, backendC);
                 vector<string> delays = DataParser::splitCSVLine(resp);
                 childSocket->sendData(delays[2]);
-                printf("The AWS sent delay=<%.2f>ms to the client using TCP over port <%d>\n", stof(delays[2]), clientPort);
+                printf("The AWS sent delay=<%.2f>ms to the client using TCP over port <%d>\n", stof(delays[2]), AWS_CLIENT_TCP_PORT);
                 
                 // log computed result
                 monitorSocket->sendData(string(DELAY_RESULT) + "," + requestLinkID + "," + resp);
-                printf("The AWS sent detailed results to the monitor using TCP over port <%d>\n", monitorPort);
+                printf("The AWS sent detailed results to the monitor using TCP over port <%d>\n", AWS_MONITOR_TCP_PORT);
                 
             } else {
                 // respond client with NOT_FOUND
@@ -146,7 +146,7 @@ int main(int argc, const char *argv[]) {
                 // log not found
                 monitorSocket->sendData(string(NOT_FOUND) + "," + requestLinkID);
                 
-                printf("The AWS sent No Match to the monitor and the client using TCP over ports <%d> and <%d>, respectively\n", monitorPort, clientPort);
+                printf("The AWS sent No Match to the monitor and the client using TCP over ports <%d> and <%d>, respectively\n", AWS_MONITOR_TCP_PORT, AWS_CLIENT_TCP_PORT);
             }
         }
         // close child socket 
@@ -183,11 +183,12 @@ string requestForComputing(LinkData &data, string fileSize, string signalPower,
     string dataToComputed = data.getDataString() + "," + fileSize + "," + signalPower;
     
     client.sendData(serverC, dataToComputed);
-    printf("The AWS sent link ID=<%d>, size=<%s>, power=<%s>, and link information to Backend-Server C using UDP over port <%d>\n", data.id(), fileSize.c_str(), signalPower.c_str(), ntohs(serverC.sin_port));
+    printf("The AWS sent link ID=<%d>, size=<%s>, power=<%s>, and link information to Backend-Server C using UDP over port <%d>\n", 
+        data.id(), fileSize.c_str(), signalPower.c_str(), ntohs(serverC.sin_port));
     
     client.recvData(serverC);
     string resp = client.getDataString();
-    printf("The AWS received outputs from Backend-Server C using UDP over port <%d>\n", ntohs(serverC.sin_port));
+    printf("The AWS received outputs from Backend-Server C using UDP over port <%d>\n", AWS_UDP_PORT);
     return resp;
 }
 
@@ -210,14 +211,14 @@ bool queryLinkData(string id, UDPSocket &client,
         matchA = 1;
         found = true;
     }
-    printf("The AWS received <%d> matches from Backend-Server <%s> using UDP over port <%d>\n", matchA, "A", ntohs(serverA.sin_port));
+    printf("The AWS received <%d> matches from Backend-Server <%s> using UDP over port <%d>\n", matchA, "A", AWS_UDP_PORT);
     
     
     if (queryLinkDataFromServer(id, "B", client, serverB, data)) {
         matchB = 1;
         found = true;
     }
-    printf("The AWS received <%d> matches from Backend-Server <%s> using UDP over port <%d>\n", matchB, "B", ntohs(serverB.sin_port));
+    printf("The AWS received <%d> matches from Backend-Server <%s> using UDP over port <%d>\n", matchB, "B", AWS_UDP_PORT);
     
     return found;
 }
@@ -232,7 +233,7 @@ bool queryLinkData(string id, UDPSocket &client,
  */
 bool queryLinkDataFromServer(string id, string name, UDPSocket &client, struct sockaddr_in &serverInfo, LinkData &data) {
     bool isSuccess = client.sendData(serverInfo, id);
-    printf("The AWS sent link ID=<%s> to Backend-Server <%s> using UDP over port <%d>\n", id.c_str(), name.c_str(), ntohs(serverInfo.sin_port));
+    printf("The AWS sent link ID=<%s> to Backend-Server <%s> using UDP over port <%d>\n", id.c_str(), name.c_str(), AWS_UDP_PORT);
     
     if (!isSuccess) {
         return false;
