@@ -11,7 +11,7 @@ using namespace std;
 LinkDataset::LinkDataset(string filename) {
     ifstream fin(filename);
     if (!fin) {
-        cout << "can't load file" << endl;
+        cerr << "Can't load or found file: " + filename << endl;
         exit(1);
     }
     loadData(fin);
