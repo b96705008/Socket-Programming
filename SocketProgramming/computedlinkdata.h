@@ -29,15 +29,15 @@ public:
     void compute();
     
     double transmissionDelay() {
-        return transmissionTime;
+        return roundTo2ndDecimal(transmissionTime);
     }
     
     double propagationDelay() {
-        return propagationTime;
+        return roundTo2ndDecimal(propagationTime);
     }
     
     double endToEndDelay() {
-        return transmissionDelay() + propagationDelay();
+        return roundTo2ndDecimal(transmissionTime + propagationTime);
     }
     
     float fileSize() {

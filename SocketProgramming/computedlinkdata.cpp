@@ -20,7 +20,7 @@ double ComputedLinkData::dbmToWatts(double dbm) {
 }
 
 double ComputedLinkData::roundTo2ndDecimal(double value) {
-    return roundf(value * 100) / 100;
+    return round(value * 100) / 100.0;
 }
 
 ComputedLinkData::ComputedLinkData() {
