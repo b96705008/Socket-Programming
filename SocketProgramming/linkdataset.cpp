@@ -35,6 +35,7 @@ void LinkDataset::loadData(ifstream &fin) {
  * @return if contains
  */
 bool LinkDataset::containsID(int linkID) {
+    // refer from [3]
     return dataMap.find(linkID) != dataMap.end();
 }
 
@@ -43,6 +44,7 @@ bool LinkDataset::containsID(int linkID) {
  * @return link data
  */
 LinkData LinkDataset::get(int linkID) {
+    // refer from [3]
     return dataMap.find(linkID)->second;
 }
 

@@ -31,5 +31,5 @@ public:
 
 private:
     void loadData(std::ifstream &);
-    std::unordered_map<int, LinkData> dataMap; // map link id to link data instance
+    std::unordered_map<int, LinkData> dataMap; // map link id to link data instance. refer from [3]
 };

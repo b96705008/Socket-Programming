@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
     
-    // aws server connection
+    // aws server connection. refer from [2]
     struct sockaddr_in awsInfo;
     bzero(&awsInfo, sizeof(awsInfo));
     awsInfo.sin_family = PF_INET;

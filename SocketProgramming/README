@@ -91,8 +91,11 @@ aws would send 3 types of message to monitor (first part means message purpose):
 Those programs would use dataparser to process the messages.
 
 ## Reused Code
-I refer some codes from http://www.beej.us/guide/bgnet, especially chapter 6. Client-Server Background.
-However, I rewrite all the socket code structure to make it fit the Object-Oriented architecture. 
+I refered some codes from:
+[1] http://www.beej.us/guide/bgnet (mainly reference)
+[2] http://zake7749.github.io/2015/03/17/SocketProgramming (socket lib explanation)
+[3] https://www.sczyh30.com/posts/C-C/cpp-stl-hashmap (hash map)
+However, I rewrite all the socket code structure to make it fit in my Object-Oriented architecture. 
 This is what C++ can do.
 
 ## How to Run

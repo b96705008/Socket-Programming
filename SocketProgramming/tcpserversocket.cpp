@@ -25,7 +25,7 @@ int TCPServerSocket::bindSocket(const char *address, int port) {
     info.sin_addr.s_addr = inet_addr(address);
     info.sin_port = htons(port);
 
-    // refer from beej.us. reuse port number when restart
+    // refer from [1]. reuse port number when restart
     int yes = 1;
     if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) == -1) {
         perror("setsockopt");
