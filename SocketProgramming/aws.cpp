@@ -183,7 +183,7 @@ string requestForComputing(LinkData &data, string fileSize, string signalPower,
     
     client.sendData(serverC, dataToComputed);
     printf("The AWS sent link ID=<%d>, size=<%s>, power=<%s>, and link information to Backend-Server C using UDP over port <%d>\n", 
-        data.id(), fileSize.c_str(), signalPower.c_str(), ntohs(serverC.sin_port));
+        data.id(), fileSize.c_str(), signalPower.c_str(), AWS_UDP_PORT);
     
     client.recvData(serverC);
     string resp = client.getDataString();
