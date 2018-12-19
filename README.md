@@ -1,17 +1,9 @@
-# EE450 Socket Programming Project, Fall 2018
+# Socket Programming
 
-## About Author
-* name: Tai-Yi Kuo
-* USC ID: 3570655162
-* USC netID: taiyikuo
-* EE450 section 2
-
-## What I have done?
-
-### Summary
+## Summary
 In this project, my goal is to create a service which can respond the end-to-end delay for client given link request. I follow the architecture requirements and developed 4 servers, 1 monitor, and 1 client program. They serve different roles. We will discuss details on "Socket Programs" section.
 
-### Socket Programs
+## Socket Programs
 1. serverA and serverB:
 They read link data from files and run as UDP server. They provide the service of searching for link profile. Each of they keep part of data, so aws would request both of them for the any query from client. PS: Please put the database files on the same path as serverA and serverB.
 
@@ -28,16 +20,7 @@ There is a important thing, I make monitor to close socket and stop once aws is 
 5. client:
 This is the program which can send link id, file size, and signal power given by user, and expect to get delay result from aws. If link id doesn't exist in serverA and serverB's storage, then aws would respond with "NOT_FOUND" message. It runs a TCP client when boot up, and it can be used repeatedly. Once it get the response and print result, then it would close and stop.
 
-### Port Number (define in defs.h)
-* serverA: UDP, 21162
-* serverB: UDP, 22162
-* serverC: UDP, 23162
-* aws UDP: 24162
-* aws TCP with client: 25162
-* aws TCP with monitor: 26162
-* client & monitor: dynamic port
-
-## Code files and Program archtiecture
+## Structure
 In order to prevent me from repeatedly writing same code, I used Object-Oriented design on this project. This would also make the whole project architecture more clear. So I used many files that contains class that encapsulate repeated logic and can be used by other main program. Below are the introduction of these files:
 
 * defs.h
@@ -61,42 +44,10 @@ It is also a good idea to encapsulate TCP socket funcions. However, TCP socket i
 * serverA.cpp, serverB.cpp, serverC.cpp, aws.cpp, monitor.cpp, client.cpp
 They are mains socket programs and serve the role as the architecture requirements. 
 
-## The format of all the messages exchanged
-I serialize all the message into string, then send in char buffer. 
-There are four parts of message format to be exhanged. 
-PS: <a> means a is variable
-
-1. client and aws
-client would send "<linkID>,<fileSize>,<signalPower>" to aws.
-aws would respond with 2 types of message: 
-    (1) NOT_FOUND
-    (2) "<endToEndDelay>"
-
-2. aws and serverA or serverB
-aws would send "linkID" to them.
-serverA or serverB would respond with 2 types of message: 
-    (1) NOT_FOUND, 
-    (2) "<linkID>,<bandwidth>,<lengthKM>,<velocity>,<noisePower>"
-
-3. aws and serverC
-aws would send "<linkID>,<bandwidth>,<lengthKM>,<velocity>,<noisePower>,<fileSize>,<signalPower>" to serverC.
-serverC would respond with "<transmissionDelay>,<propagationDelay>,<endToEndDelay>"
-
-4. aws and monitor
-aws would send 3 types of message to monitor (first part means message purpose): 
-    (1) "CLIENT_INPUT,<linkID>,<fileSize>,<signalPower>"
-    (2) "DELAY_RESULT,<transmissionDelay>,<propagationDelay>,<endToEndDelay>"
-    (3) "NOT_FOUND,<linkID>"
-
-Those programs would use dataparser to process the messages.
-
-## Reused Code
-I refered some codes from:
-[1] http://www.beej.us/guide/bgnet (mainly reference)
-[2] http://zake7749.github.io/2015/03/17/SocketProgramming (socket lib explanation)
-[3] https://www.sczyh30.com/posts/C-C/cpp-stl-hashmap (hash map)
-However, I rewrite all the socket code structure to make it fit in my Object-Oriented architecture. 
-This is what C++ can do.
+## References
+1. http://www.beej.us/guide/bgnet (mainly reference)
+2. http://zake7749.github.io/2015/03/17/SocketProgramming (socket lib explanation)
+3. https://www.sczyh30.com/posts/C-C/cpp-stl-hashmap (hash map)
 
 ## How to Run
 ```
@@ -107,7 +58,6 @@ make serverB
 make serverC
 make aws
 make monitor
-
 ./client <LINK_ID> <SIZE> <POWER> // can be executed repeatedly
 ```
 
